@@ -1,25 +1,26 @@
 const db = require(`../../../helpers/database`);
 const {v4: uuidv4} = require('uuid');
 
-class UserRepository {
+class ItemRepository {
+
     constructor(tableName) {
         this.tableName = tableName;
-    }   
+    }
 
-    async findByID(UserID) {
-        console.log("The userID : " + UserID);
-        const params_old = {
-            TableName: this.tableName,
-            Key: {
-                UserID,
-            },
-        };
+    async findByID(itemId) {
+        console.log("The itemId : " + itemId + " and the table: " + this.tableName);
+        // const params_old = {
+        //     TableName: tableName,
+        //     Key: {
+        //         itemId,
+        //     },
+        // };
 
         var params = {
             TableName: this.tableName,
             KeyConditionExpression: "id = :id",
             ExpressionAttributeValues: {
-                ":id": Number(UserID)
+                ":id": Number(itemId)
             }
         };
         // return await db.get(params).promise();
@@ -35,14 +36,46 @@ class UserRepository {
     }
 
     async create(data) {
-        console.log("the username: " + JSON.stringify(data));
+        console.log("the data: " + JSON.stringify(data) + " and the table: " + this.tableName);
+
+        var item;
+
+        switch (this.tableName) {
+            case "users": 
+                item = {
+                    id: Math.floor(Math.random() * 100000),
+                    UserID: uuidv4(),
+                    userName: data.userName,
+                    email: data.email,
+                    password: data.password
+                }
+                break;
+            case "group":
+                item = {
+                    id: Math.floor(Math.random() * 100000),
+                    groupName: data.groupName
+                }
+                break;
+            case "event":
+                item = {
+                    id: Math.floor(Math.random() * 100000),
+                    eventName: data.eventName,
+                    description: data.description,
+                    date: data.date
+                }
+                break;
+            case "ctf": 
+                item = {
+                    id: Math.floor(Math.random() * 100000),
+                    ctfName: data.ctfName,
+                    date: data.date,
+                    problem: data.problem
+                }
+        }
+
         const params = {
             TableName: this.tableName,
-            Item: {
-                id: Math.floor(Math.random() * 100000),
-                UserID: uuidv4(),
-                Username: data.Username,
-            },
+            Item: item,
         };
 
         console.log("The params: " + JSON.stringify(params));
@@ -55,9 +88,7 @@ class UserRepository {
             }
         })
 
-        await db.put(params).promise();
-
-        return params.Item;
+        return db.put(params).promise();
     }
 
     async update(UserID, data) {
@@ -93,4 +124,4 @@ class UserRepository {
     }
 }
 
-module.exports = new UserRepository();
+module.exports = ItemRepository;

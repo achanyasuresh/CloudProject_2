@@ -1,9 +1,11 @@
 const UserRepository = require(`../repository/user.repository`);
+const ItemRepository = require(`../repository/item.repository`);
 
-class UserService {
+class ItemService {
 
-    async findByID(UserID) {
-        const data = await UserRepository.findByID(UserID);
+    async findByID(itemId) {
+        var itemRepository = new ItemRepository("users");
+        const data = await itemRepository.findByID(itemId);
 
         console.log("the data : " + JSON.stringify(data));
         if (data) {
@@ -14,23 +16,22 @@ class UserService {
     }
 
     async create(data) {
+        var itemRepository = new ItemRepository("users");
         console.log("we've reached the service layer");
         console.log("the data: " + JSON.stringify(data));
-        return await UserRepository.create({
-            Username: data.Username
-        });
+        return await itemRepository.create(data);
     }
 
     async update(UserID, data) {
-        return await UserRepository.update(UserID, {
+        return await itemRepository.update(UserID, {
             Username: data.Username
         });
     }
 
     async deleteByID(UserID) {
-        return await UserRepository.deleteByID(UserID);
+        return await itemRepository.deleteByID(UserID);
     }
 
 }
 
-module.exports = new UserService()
+module.exports = ItemService;

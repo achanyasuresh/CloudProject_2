@@ -1,36 +1,39 @@
-const UserService = require(`../service/user.service`);
+const UserService = require(`../service/item.service`);
+const ItemService = require(`../service/item.service`);
 
 class UserController {
 
     async findByID(req, res) {
 
+        var itemService = new ItemService("user");
         console.log("reached the controller: " + JSON.stringify(req.query));
 
-        const data = await UserService.findByID(req.query.UserID)
+        const data = await itemService.findByID(req.query.UserID)
 
         res.json(data)
     }
 
     async create(req, res) {
 
-        console.log("we've reached the controller layer");
-        const data = await UserService.create(req.body)
+        var itemService = new ItemService("user");
+        console.log("we've reached the controller layer: " + itemService);
+        const data = await itemService.create(req.body)
 
         res.json(data)
     }
 
     async update(req, res) {
-        const data = await UserService.update(req.params.UserID, req.body)
+        const data = await itemService.update(req.params.UserID, req.body)
 
         res.json(data)
     }
 
     async deleteByID(req, res) {
-        await UserService.deleteByID(req.params.UserID)
+        await itemService.deleteByID(req.params.UserID)
 
         res.json(`Success`)
     }
 
 }
 
-module.exports = new UserController()
+module.exports = UserController;
