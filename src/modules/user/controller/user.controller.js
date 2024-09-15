@@ -3,12 +3,17 @@ const UserService = require(`../service/user.service`);
 class UserController {
 
     async findByID(req, res) {
-        const data = await UserService.findByID(req.params.UserID)
+
+        console.log("reached the controller: " + JSON.stringify(req.query));
+
+        const data = await UserService.findByID(req.query.UserID)
 
         res.json(data)
     }
 
     async create(req, res) {
+
+        console.log("we've reached the controller layer");
         const data = await UserService.create(req.body)
 
         res.json(data)
