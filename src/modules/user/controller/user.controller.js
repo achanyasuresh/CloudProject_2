@@ -3,6 +3,13 @@ const ItemService = require(`../service/item.service`);
 
 class UserController {
 
+    async test(req, res) {
+
+        res.json({
+            "item": "Hi there, the server is up and running"
+        });
+    }
+
     async findByID(req, res) {
 
         var itemService = new ItemService("user");
