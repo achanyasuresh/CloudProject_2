@@ -1,6 +1,8 @@
 const UserController = require('../modules/user/controller/user.controller');
+const AuthenticationController = require('../modules/user/controller/authentication.controller')
 
 const userController = new UserController();
+const authenticationController = new AuthenticationController();
 
 module.exports = async (app) => {
 
@@ -11,4 +13,6 @@ module.exports = async (app) => {
     app.post(`/api/v1/users`, userController.create);
     app.patch(`/api/v1/users/:UserID`, userController.update);
     app.delete(`/api/v1/users/:UserID`, userController.deleteByID);
+
+    app.post('/api/v1/authenticate/login', authenticationController.login);
 };

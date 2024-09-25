@@ -1,11 +1,17 @@
 const express = require('express')
+const cors = require('cors')
 const app = express()
 const port = 8080
 
 const bodyParser = require('body-parser')
 
+const corsOptions = {
+    origin: "http://localhost:3000"
+};
+
 const createServer = async () => {
-    app.use(bodyParser.json())
+    app.use(bodyParser.json());
+    app.use(cors(corsOptions));
 
     // routes
     require(`./src/routes/api`)(app);

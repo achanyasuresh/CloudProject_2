@@ -35,6 +35,35 @@ class ItemRepository {
          }).promise();
     }
 
+    async findByUserNameAndPassword(email, password) {
+        // console.log("The itemId : " + itemId + " and the table: " + this.tableName);
+        // const params_old = {
+        //     TableName: tableName,
+        //     Key: {
+        //         itemId,
+        //     },
+        // };
+
+        var params = {
+            TableName: this.tableName,
+            FilterExpression: "email = :email and password = :password",
+            ExpressionAttributeValues: {
+                ":email": email,
+                ":password": password
+            }
+        };
+        // return await db.get(params).promise();
+
+        return db.scan(params, function (err, data) {
+            if (err) {
+                console.log(err);
+                
+            } else {
+                console.log("yayy: " + JSON.stringify(data));
+            }
+         }).promise();
+    }
+
     async create(data) {
         console.log("the data: " + JSON.stringify(data) + " and the table: " + this.tableName);
 
@@ -43,9 +72,9 @@ class ItemRepository {
         switch (this.tableName) {
             case "users": 
                 item = {
-                    id: Math.floor(Math.random() * 100000),
-                    UserID: uuidv4(),
-                    userName: data.userName,
+                    // id: Math.floor(Math.random() * 100000),
+                    user_id: uuidv4(),
+                    user_name: data.user_name,
                     email: data.email,
                     password: data.password
                 }
