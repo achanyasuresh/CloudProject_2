@@ -1,5 +1,5 @@
 const express = require('express');
-const dbSetup = require('./src/helpers/database');
+const { getDb, initialSetup } = require('./src/helpers/database');
 const cors = require('cors');
 const app = express();
 const port = 8080;
@@ -20,7 +20,9 @@ const createServer = async () => {
     require(`./src/routes/api`)(app);
 
     app.listen(port, () => {
-        dbSetup.initialSetup().then(() => console.log("the db initial: " + JSON.stringify(dbSetup.getDb())));
+        initialSetup()
+            .then(() =>
+                console.log("the db initial: " + JSON.stringify(getDb())));
         db = dbSetup.db;
         console.log(`App listening at http://localhost:${port}`)
     })
