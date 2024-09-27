@@ -45,7 +45,8 @@ class AuthenticationService {
             const verified = jwt.verify(token, jwtSecretKey);
 
             if (verified) {
-                return res.send("Successfully Verified");
+                console.log("Successfully Verified");
+                return;
             } else {
                 throw new Error("Authentication failed!");
             }
