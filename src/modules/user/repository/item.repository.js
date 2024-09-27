@@ -84,10 +84,10 @@ class ItemRepository {
                     password: data.password
                 }
                 break;
-            case "group":
+            case "groups":
                 item = {
                     group_id: uuidv4(),
-                    group_name: data.groupName
+                    group_name: data.group_name
                 }
                 break;
             case "event":
