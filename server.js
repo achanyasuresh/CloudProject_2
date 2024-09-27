@@ -10,6 +10,8 @@ const corsOptions = {
     origin: "http://localhost:3000"
 };
 
+const db = null;
+
 const createServer = async () => {
     app.use(bodyParser.json());
     app.use(cors(corsOptions));
@@ -19,10 +21,12 @@ const createServer = async () => {
 
     app.listen(port, () => {
         dbSetup.initialSetup();
+        db = dbSetup.db;
         console.log(`App listening at http://localhost:${port}`)
     })
 };
 
 module.exports = {
     createServer,
+    db
 };
