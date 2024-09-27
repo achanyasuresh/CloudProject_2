@@ -16,9 +16,10 @@ class ItemRepository {
         //     },
         // };
 
+        var db = getDb();
         var params = {
             TableName: this.tableName,
-            KeyConditionExpression: "id = :id",
+            KeyConditionExpression: "user_id = :id",
             ExpressionAttributeValues: {
                 ":id": Number(itemId)
             }

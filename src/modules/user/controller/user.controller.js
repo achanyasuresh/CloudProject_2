@@ -1,5 +1,8 @@
 const UserService = require(`../service/item.service`);
 const ItemService = require(`../service/item.service`);
+const AuthenticationService = require('../service/authentication.service');
+
+const authenticationService = new AuthenticationService();
 
 class UserController {
 
@@ -12,6 +15,8 @@ class UserController {
 
     async findByID(req, res) {
 
+        authenticationService.validateJwt(req);
+        
         var itemService = new ItemService("user");
         console.log("reached the controller: " + JSON.stringify(req.query));
 
