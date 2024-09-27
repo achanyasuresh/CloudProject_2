@@ -1,7 +1,7 @@
 const UserRepository = require(`../repository/user.repository`);
 const ItemRepository = require(`../repository/item.repository`);
 const { getJwtCreds } = require('../../../helpers/creds');
-const { utilConstants } = require('../../../helpers/creds');
+const { utilConstants } = require('../../../helpers/constants');
 const jwt = require('jsonwebtoken');
 
 class AuthenticationService {
