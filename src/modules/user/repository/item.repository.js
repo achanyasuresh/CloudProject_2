@@ -108,6 +108,8 @@ class ItemRepository {
         };
 
         console.log("The params: " + JSON.stringify(params));
+        console.log("the db object: " + db);
+        console.log("the db object string: " + JSON.stringify(db));
 
         db.put(params, function(error, data) {
             if (error) {

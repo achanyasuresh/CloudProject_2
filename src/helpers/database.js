@@ -59,6 +59,9 @@ const initialSetup = async function () {
                 });
 
                 db = new AWS.DynamoDB.DocumentClient({ convertEmptyValues: true });
+
+                console.log("The db object in the setup phase: " + db);
+                console.log("The db object in the setup phase string: " + JSON.stringify(db));
             });
 
         // if ('SecretString' in secretValue) {
