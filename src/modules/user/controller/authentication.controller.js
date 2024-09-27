@@ -10,7 +10,7 @@ class UserController {
         authenticationService.login(req.body.email, req.body.password)
             .then((loginResponse) => {
                 // console.log("the response: " + JSON.stringify(loginResponse));
-                if (loginResponse == null || !loginResponse) {
+                if (loginResponse == null || !loginResponse.loginStatus) {
                     res.statusCode = 401;
                     res.json({
                         message: "Incorrect email or password"
@@ -18,7 +18,8 @@ class UserController {
                 } else {
                     res.statusCode = 200;
                     res.json({
-                        message: "You have successfully logged in!"
+                        message: "You have successfully logged in!",
+                        token: loginResponse.token
                     });
                 }
 
