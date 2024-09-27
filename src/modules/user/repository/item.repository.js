@@ -19,7 +19,7 @@ class ItemRepository {
         var db = await getDb();
         var params = {
             TableName: this.tableName,
-            KeyConditionExpression: "user_id = :id",
+            KeyConditionExpression: "" + this.tableName + "_id = :id",
             ExpressionAttributeValues: {
                 ":id": itemId
             }
@@ -78,7 +78,6 @@ class ItemRepository {
         switch (this.tableName) {
             case "users": 
                 item = {
-                    // id: Math.floor(Math.random() * 100000),
                     user_id: uuidv4(),
                     user_name: data.user_name,
                     email: data.email,
@@ -87,7 +86,7 @@ class ItemRepository {
                 break;
             case "group":
                 item = {
-                    id: Math.floor(Math.random() * 100000),
+                    group_id: uuidv4(),
                     groupName: data.groupName
                 }
                 break;
@@ -114,14 +113,12 @@ class ItemRepository {
         };
 
         console.log("The params: " + JSON.stringify(params));
-        console.log("the db object: " + db);
-        console.log("the db object string: " + JSON.stringify(db));
 
         db.put(params, function(error, data) {
             if (error) {
                 console.log("the error: " + error);
             } else {
-                console.log("yayy: " + JSON.stringify(data));
+                console.log("inserted into db: " + JSON.stringify(data));
             }
         })
 

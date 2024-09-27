@@ -15,17 +15,6 @@ class UserController {
 
     async findByID(req, res) {
 
-        try {
-            await authenticationService.validateJwt(req, res);
-        } catch (error) {
-            console.log("the jwt validator error: " + error);
-            return res.status(401)
-                .json({
-                    "internalMessage": "Invalid JWT token",
-                    "message": "Authentication failure"
-                });
-        }
-
         var itemService = new ItemService("user");
         console.log("reached the controller: " + JSON.stringify(req.query));
 

@@ -34,7 +34,7 @@ class AuthenticationService {
     }
 
 
-    async validateJwt(request) {
+    async validateJwt(request, response, next) {
         let jwtSecretKey = await getJwtCreds();
 
         try {
@@ -45,18 +45,24 @@ class AuthenticationService {
             const verified = jwt.verify(token, jwtSecretKey);
 
             if (verified) {
-                console.log("Successfully Verified");
-                return;
+                console.log("Successfully Verified JWT");
+                next();
             } else {
-                throw new Error("Authentication failed!");
+                return response.status(401)
+                    .json({
+                        "internalMessage": "Invalid JWT token",
+                        "message": "Authentication failure"
+                    });
             }
         } catch (error) {
             console.log("there was an error while validating the token: " + error);
-            throw error;
+            return response.status(401)
+                .json({
+                    "internalMessage": "There was an issue validating the JWT: " + error,
+                    "message": "Authentication failure"
+                });
         }
     }
-
-
 }
 
 module.exports = AuthenticationService;
