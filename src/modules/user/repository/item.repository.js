@@ -44,7 +44,7 @@ class ItemRepository {
         //     },
         // };
 
-        db = await getDb();
+        var db = await getDb();
 
         var params = {
             TableName: this.tableName,
