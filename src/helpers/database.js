@@ -44,6 +44,21 @@ const initialSetup = async function () {
                 console.log("finished the request");
                 console.log("The response: " + response);
                 console.log("the response json: " + JSON.stringify(response));
+
+                var creds = JSON.parse(response.SecretString);
+
+                console.log("The db creds: " + creds);
+                console.log("The db creds string: " + JSON.stringify(creds));
+
+                AWS.config.update({
+
+                    accessKeyId: creds.db_access_key_id,
+                    secretAccessKey: creds.db_secret_access_key,
+                    region: "us-east-1",
+                    endpoint: "https://dynamodb.us-east-1.amazonaws.com"
+                });
+
+                db = new AWS.DynamoDB.DocumentClient({ convertEmptyValues: true });
             });
 
         // if ('SecretString' in secretValue) {
@@ -59,14 +74,6 @@ const initialSetup = async function () {
     // const secret = response.SecretString;
 
     // console.log("The secrets: " + secret);
-
-    // AWS.config.update({
-
-    //     region: "us-east-1",
-    //     endpoint: "https://dynamodb.us-east-1.amazonaws.com"
-    // });
-
-    // db = new AWS.DynamoDB.DocumentClient({ convertEmptyValues: true });
 }
 
 module.exports = {
