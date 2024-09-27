@@ -39,9 +39,6 @@ class AuthenticationService {
 
         try {
             const token = request.header(utilConstants.TOKEN_HEADER_KEY);
-            console.log("the secret key: " + jwtSecretKey);
-            console.log("the token: " + token);
-
             const verified = jwt.verify(token, jwtSecretKey);
 
             if (verified) {

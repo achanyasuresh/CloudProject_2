@@ -11,14 +11,14 @@ class GroupController {
 
         const data = await groupService.create(req.body)
         console.log("the data put into the table: " + data);
-        console.log("the data put into the table string: " + JSON.stringify(data));
+        console.log("the data put into the table string: " + data.json);
 
         res.json(data)
     }
 
     async findByID(req, res) {
 
-        const data = await groupService.findByID(req.query.UserID)
+        const data = await groupService.findByID(req.params.groupId)
 
         res.json(data)
     }
