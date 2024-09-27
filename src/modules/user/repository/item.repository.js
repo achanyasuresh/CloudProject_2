@@ -44,6 +44,8 @@ class ItemRepository {
         //     },
         // };
 
+        db = await getDb();
+
         var params = {
             TableName: this.tableName,
             FilterExpression: "email = :email and password = :password",
