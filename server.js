@@ -20,7 +20,7 @@ const createServer = async () => {
     require(`./src/routes/api`)(app);
 
     app.listen(port, () => {
-        dbSetup.initialSetup().then(() => console.log("the db: " + JSON.stringify(dbSetup.getDb())));
+        dbSetup.initialSetup().then(() => console.log("the db initial: " + JSON.stringify(dbSetup.getDb())));
         db = dbSetup.db;
         console.log(`App listening at http://localhost:${port}`)
     })

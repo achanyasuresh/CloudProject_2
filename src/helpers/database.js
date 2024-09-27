@@ -17,7 +17,7 @@ const getDb = function() {
     return db;
 }
 
-var db = null;
+let db = null;
 const initialSetup = async function () {
     console.log("setting up db creds");
 
@@ -66,6 +66,9 @@ const initialSetup = async function () {
 
                 console.log("The db object in the setup phase: " + db);
                 console.log("The db object in the setup phase string: " + JSON.stringify(db));
+            })
+            .then(() => {
+                console.log("the db after then: " + JSON.stringify(db));
             });
 
         // if ('SecretString' in secretValue) {
