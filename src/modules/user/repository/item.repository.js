@@ -66,7 +66,7 @@ class ItemRepository {
 
     async create(data) {
 
-        var db = getDb();
+        var db = await getDb();
         console.log("the data: " + JSON.stringify(data) + " and the table: " + this.tableName);
 
         var item;

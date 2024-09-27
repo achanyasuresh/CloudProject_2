@@ -15,11 +15,11 @@ let secretKey;
 
 let db = null;
 
-const getDb = function() {
+const getDb = async function() {
 
     if (db == null) {
         console.log("initialising db");
-        initialSetup();
+        await initialSetup();
     } else {
         console.log("db already initialised");
     }
