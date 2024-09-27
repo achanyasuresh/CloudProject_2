@@ -1,4 +1,4 @@
-const db = require('../../../helpers/database').getDb();
+const {getDb} = require('../../../helpers/database');
 const {v4: uuidv4} = require('uuid');
 
 class ItemRepository {
@@ -65,6 +65,8 @@ class ItemRepository {
     }
 
     async create(data) {
+
+        var db = getDb();
         console.log("the data: " + JSON.stringify(data) + " and the table: " + this.tableName);
 
         var item;

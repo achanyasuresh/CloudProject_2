@@ -13,9 +13,16 @@ const client = new SecretsManagerClient({
 
 let secretKey;
 
-let db;
+let db = null;
 
 const getDb = function() {
+
+    if (db == null) {
+        console.log("initialising db");
+        initialSetup();
+    } else {
+        console.log("db already initialised");
+    }
     return db;
 }
 
