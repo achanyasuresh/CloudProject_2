@@ -10,7 +10,7 @@ const corsOptions = {
     origin: "http://localhost:3000"
 };
 
-const db = null;
+var db = null;
 
 const createServer = async () => {
     app.use(bodyParser.json());
