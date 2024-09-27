@@ -13,6 +13,10 @@ const client = new SecretsManagerClient({
 
 let secretKey;
 
+const getDb = function() {
+    return db;
+}
+
 var db = null;
 const initialSetup = async function () {
     console.log("setting up db creds");
@@ -77,9 +81,10 @@ const initialSetup = async function () {
     // const secret = response.SecretString;
 
     // console.log("The secrets: " + secret);
+
 }
 
 module.exports = {
-    db,
+    getDb,
     initialSetup
 };

@@ -1,4 +1,4 @@
-const db = require('../../../../server');
+const db = require('../../../helpers/database').getDb();
 const {v4: uuidv4} = require('uuid');
 
 class ItemRepository {
