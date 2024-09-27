@@ -21,10 +21,11 @@ class ItemRepository {
             TableName: this.tableName,
             KeyConditionExpression: "user_id = :id",
             ExpressionAttributeValues: {
-                ":id": Number(itemId)
+                ":id": itemId
             }
         };
-        // return await db.get(params).promise();
+        
+        console.log("the params: " + JSON.stringify(params));
 
         return db.query(params, function (err, data) {
             if (err) {
