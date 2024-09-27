@@ -22,8 +22,11 @@ const createServer = async () => {
     app.listen(port, () => {
         initialSetup()
             .then(() =>
-                console.log("the db initial: " + JSON.stringify(getDb())));
-        db = dbSetup.db;
+                console.log("the db initial: " + JSON.stringify(getDb()))
+            )
+            .then(() => {
+                db = getDb();
+            });
         console.log(`App listening at http://localhost:${port}`)
     })
 };
