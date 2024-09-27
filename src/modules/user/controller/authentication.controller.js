@@ -11,14 +11,14 @@ class UserController {
             .then((loginResponse) => {
                 // console.log("the response: " + JSON.stringify(loginResponse));
                 if (loginResponse == null || !loginResponse) {
-                    res.statusCode = 400;
+                    res.statusCode = 401;
                     res.json({
-                        login_status: "Incorrect email or password"
+                        message: "Incorrect email or password"
                     });
                 } else {
                     res.statusCode = 200;
                     res.json({
-                        login_status: "You have successfully logged in!"
+                        message: "You have successfully logged in!"
                     });
                 }
 
