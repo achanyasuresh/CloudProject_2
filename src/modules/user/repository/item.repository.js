@@ -16,7 +16,7 @@ class ItemRepository {
         //     },
         // };
 
-        var db = getDb();
+        var db = await getDb();
         var params = {
             TableName: this.tableName,
             KeyConditionExpression: "user_id = :id",
