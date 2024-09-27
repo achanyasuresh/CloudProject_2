@@ -39,23 +39,19 @@ class AuthenticationService {
 
         try {
             const token = request.header(utilConstants.TOKEN_HEADER_KEY);
+            console.log("the secret key: " + jwtSecretKey);
+            console.log("the token: " + token);
 
             const verified = jwt.verify(token, jwtSecretKey);
+
             if (verified) {
                 return res.send("Successfully Verified");
             } else {
-                return res.status(401)
-                    .json({
-                        "internalMessage": "Invalid JWT token",
-                        "message": "Authentication failure"
-                    });
+                throw new Error("Authentication failed!");
             }
         } catch (error) {
-            return res.status(401)
-                .json({
-                    "internalMessage": "Invalid JWT token",
-                    "message": "Authentication failure"
-                });
+            console.log("there was an error while validating the token: " + error);
+            throw error;
         }
     }
 
