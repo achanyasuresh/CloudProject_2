@@ -1,4 +1,4 @@
-const db = require(`../../../helpers/database`);
+const {getDb} = require(`../../../helpers/database`);
 const {v4: uuidv4} = require('uuid');
 
 class UserRepository {
