@@ -37,5 +37,5 @@ module.exports = async (app) => {
     app.post('/api/v1/authenticate/login', authenticationController.login);
 
     app.post('/api/v1/notification', notificationController.sendNotification);
-    app.post('/api/v1/notification/register', notificationController.sendNotification);
+    app.post('/api/v1/notification/register', notificationController.subscribeToTopic);
 };  
