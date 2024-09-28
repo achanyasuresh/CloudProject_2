@@ -38,7 +38,11 @@ class GroupRepository {
             Key: {
                 group_id: groupId
             },
-            UpdateExpression: 'set #group_name = :group_name, #members = :members',
+            UpdateExpression: 'SET #group_name = :group_name, #members = :members',
+            ExpressionAttributeNames: {
+                ":group_name": "group_name",
+                ":members": "members"
+            },
             ExpressionAttributeValues: {
                 ":group_name": data.group_name,
                 ":members": data.members
