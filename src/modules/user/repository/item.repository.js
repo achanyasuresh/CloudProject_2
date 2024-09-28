@@ -118,7 +118,8 @@ class ItemRepository {
             if (error) {
                 console.log("the error: " + error);
             } else {
-                console.log("inserted into db: " + JSON.stringify(data));
+                console.log("inserted into db: " + data);
+                console.log("inserted into db string: " + JSON.stringify(data));
             }
         }).promise();
     }

@@ -7,7 +7,6 @@ class ItemService {
     
     async create(data) {
         var itemRepository = new ItemRepository("groups");
-        console.log("the data: " + JSON.stringify(data));
         return await itemRepository.create(data);
     }
 
