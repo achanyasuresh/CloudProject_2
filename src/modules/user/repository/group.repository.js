@@ -31,6 +31,8 @@ class GroupRepository {
     }
 
     async update(groupId, data) {
+
+        var db = await getDb();
         const params = {
             TableName: this.tableName,
             Key: {
