@@ -43,6 +43,7 @@ class NotificationService {
 
     async subscribeToTopic(email) {
 
+        console.log("setting up the sns creds");
         const creds = await getAwsCreds();
         
         AWS.config.update({
@@ -62,8 +63,11 @@ class NotificationService {
             ReturnSubscriptionArn: true
         };
 
-        new AWS.SNS({ apiVersion: "2010-03-31" })
-            .subscribe(params, function (err, data) {
+        console.log('subscribing to the topic');
+
+        var sns = await new AWS.SNS({ apiVersion: "2010-03-31" });
+            
+        sns.subscribe(params, function (err, data) {
                 if (err) {
                     console.log(err, err.stack);
                 }
