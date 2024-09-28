@@ -43,6 +43,14 @@ class NotificationService {
 
     async subscribeToTopic(email) {
 
+        const creds = await getAwsCreds();
+        
+        AWS.config.update({
+            accessKeyId: creds.db_access_key_id,
+            secretAccessKey: creds.db_secret_access_key,
+            region: "us-east-1"
+        });
+
         var params = {
             Protocol: utilConstants.SNS_SUBSCRIPTION_PROTOCOL,
             TopicArn: utilConstants.SNS_TOPIC_ARN,
