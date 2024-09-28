@@ -54,14 +54,16 @@ class NotificationService {
             ReturnSubscriptionArn: true
         };
 
-        sns.subscribe(params, function (err, data) {
-            if (err) {
-                console.log(err, err.stack);
-            }
-            else {
-                console.log(data);
-            }
-        });
+        new AWS.SNS({ apiVersion: "2010-03-31" })
+            .subscribe(params, function (err, data) {
+                if (err) {
+                    console.log(err, err.stack);
+                }
+                else {
+                    console.log(data);
+                }
+            })
+            .promise();
     }
 
 }
