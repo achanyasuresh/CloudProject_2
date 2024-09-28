@@ -46,9 +46,14 @@ class GroupRepository {
             ReturnValues: `UPDATED_NEW`,
         };
 
-        const update = await db.update(params).promise();
-
-        return update.Attributes;
+        return await db.update(params, function (error, data) {
+            if (error) {
+                console.log("Couldn't update the group: " + error);
+            } else {
+                console.log("updated the group data successfully: " + data);
+                console.log("updated the group data successfully string: " + JSON.stringify(data));
+            }
+        }).promise();
     }
 
     async deleteByID(UserID) {
