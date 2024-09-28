@@ -4,6 +4,8 @@ const GroupController = require('../modules/user/controller/group.controller')
 const EventController = require('../modules/user/controller/event.controller');
 
 const AuthenticationService = require('../modules/user/service/authentication.service');
+const req = require('express/lib/request');
+const NotificationController = require('../modules/user/controller/notification.controller');
 
 const authenticationService = new AuthenticationService();
 
@@ -11,6 +13,7 @@ const userController = new UserController();
 const authenticationController = new AuthenticationController();
 const groupController = new GroupController();
 const eventController = new EventController();
+const notificationController = new NotificationController();
 
 module.exports = async (app) => {
 
@@ -32,4 +35,7 @@ module.exports = async (app) => {
     app.put('/api/v1/event', authenticationService.validateJwt, eventController.update);
 
     app.post('/api/v1/authenticate/login', authenticationController.login);
-};
+
+    app.post('/api/v1/notification', notificationController.sendNotification);
+    app.post('/api/v1/notification/register', notificationController.sendNotification);
+};  
