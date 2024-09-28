@@ -18,6 +18,9 @@ class GroupController {
 
     async findByID(req, res) {
 
+        console.log("The params: " + req.params);
+        console.log("The query stuff: " + req.query);
+
         const data = await groupService.findByID(req.params.groupId)
 
         res.json(data)

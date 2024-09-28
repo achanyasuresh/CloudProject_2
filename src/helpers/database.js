@@ -32,7 +32,6 @@ const initialSetup = async function () {
     const config = { region: "us-east-1" }
 
     let secretsManager = new AWS.SecretsManager(config);
-    // console.log("the manager: " + JSON.stringify(secretsManager));
     try {
         const secretValue = await client.send(new GetSecretValueCommand({
             SecretId: secret_name,
@@ -50,8 +49,6 @@ const initialSetup = async function () {
         });
 
         db = new AWS.DynamoDB.DocumentClient({ convertEmptyValues: true });
-
-        console.log("DB object initialized:", JSON.stringify(db));
 
     } catch (error) {
         console.log("The db credentials couldn't be accessed! ERROR: " + error);
