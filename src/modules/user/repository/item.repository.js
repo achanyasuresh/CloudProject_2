@@ -114,7 +114,7 @@ class ItemRepository {
 
         console.log("The params: " + JSON.stringify(params));
 
-        return db.put(params, function(error, data) {
+        return db.putItem(params, function(error, data) {
             if (error) {
                 console.log("the error: " + error);
             } else {
