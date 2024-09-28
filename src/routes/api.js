@@ -1,14 +1,16 @@
 const UserController = require('../modules/user/controller/user.controller');
 const AuthenticationController = require('../modules/user/controller/authentication.controller')
 const GroupController = require('../modules/user/controller/group.controller')
+const EventController = require('../modules/user/controller/event.controller');
 
-const AuthenticationService = require('../modules/user/service/authentication.service')
+const AuthenticationService = require('../modules/user/service/authentication.service');
 
 const authenticationService = new AuthenticationService();
 
 const userController = new UserController();
 const authenticationController = new AuthenticationController();
 const groupController = new GroupController();
+const eventController = new EventController();
 
 module.exports = async (app) => {
 
@@ -21,10 +23,13 @@ module.exports = async (app) => {
     app.put(`/api/v1/users/:UserID`, authenticationService.validateJwt, userController.update);
     app.delete(`/api/v1/users/:UserID`, authenticationService.validateJwt, userController.deleteByID);
 
-    // app.post('/api/v1/group', authenticationService.validateJwt, groupController.create);
-    app.post('/api/v1/group', groupController.create);
+    app.post('/api/v1/group', authenticationService.validateJwt, groupController.create);
     app.get('/api/v1/group', authenticationService.validateJwt, groupController.findByID);
     app.put('/api/v1/group', authenticationService.validateJwt, groupController.update);
+
+    app.post('/api/v1/event', authenticationService.validateJwt, eventController.create);
+    app.get('/api/v1/event', authenticationService.validateJwt, eventController.findByID);
+    app.put('/api/v1/event', authenticationService.validateJwt, eventController.update);
 
     app.post('/api/v1/authenticate/login', authenticationController.login);
 };
