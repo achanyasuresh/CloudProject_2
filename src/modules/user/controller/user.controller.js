@@ -3,6 +3,7 @@ const ItemService = require(`../service/item.service`);
 const AuthenticationService = require('../service/authentication.service');
 
 const authenticationService = new AuthenticationService();
+const userService = new UserService();
 
 class UserController {
 
@@ -15,20 +16,13 @@ class UserController {
 
     async findByID(req, res) {
 
-        var itemService = new ItemService("user");
-        console.log("reached the controller: " + JSON.stringify(req.query));
-
-        const data = await itemService.findByID(req.query.UserID)
-
+        const data = await userService.findByID(req.query.UserID)
         res.json(data)
     }
 
     async create(req, res) {
 
-        var itemService = new ItemService("user");
-        console.log("we've reached the controller layer: " + itemService);
-        const data = await itemService.create(req.body)
-
+        const data = await userService.create(req.body)
         res.json(data)
     }
 

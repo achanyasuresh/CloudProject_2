@@ -6,23 +6,19 @@ class UserRepository {
         this.tableName = tableName;
     }   
 
-    async findByID(UserID) {
-        console.log("The userID : " + UserID);
-        const params_old = {
-            TableName: this.tableName,
-            Key: {
-                UserID,
-            },
-        };
+    async findByID(itemId) {
+        console.log("The itemId : " + itemId + " and the table: " + this.tableName);
 
+        var db = await getDb();
         var params = {
-            TableName: this.tableName,
-            KeyConditionExpression: "id = :id",
+            TableName: "users",
+            KeyConditionExpression: "user_id = :id",
             ExpressionAttributeValues: {
-                ":id": Number(UserID)
+                ":id": itemId
             }
         };
-        // return await db.get(params).promise();
+        
+        console.log("the params: " + JSON.stringify(params));
 
         return db.query(params, function (err, data) {
             if (err) {
@@ -35,34 +31,42 @@ class UserRepository {
     }
 
     async create(data) {
-        console.log("the username: " + JSON.stringify(data));
+        var db = await getDb();
+
+        const userUuid = uuidv4();
         const params = {
-            TableName: this.tableName,
-            Item: {
-                id: Math.floor(Math.random() * 100000),
-                UserID: uuidv4(),
-                Username: data.Username,
+            TableName: "users",
+            Key: {
+                user_id: userUuid
             },
+            UpdateExpression: 'SET #user_name = :user_name, #email = :email, #password = :password',
+            ExpressionAttributeNames: {
+                "#user_name": "user_name",
+                "#email": "email",
+                "#password": "password"
+            },
+            ExpressionAttributeValues: {
+                ":user_name": data.user_name,
+                ":email": data.email,
+                ":password": data.password
+            },
+            ReturnValues: `UPDATED_NEW`
         };
 
-        console.log("The params: " + JSON.stringify(params));
-
-        db.put(params, function(error, data) {
+        return await db.update(params, function (error, data) {
             if (error) {
-                console.log("the error: " + error);
+                console.log("Couldn't create the group: " + error);
             } else {
-                console.log("yayy: " + JSON.stringify(data));
+                console.log("created the group data successfully: " + data);
+                console.log("created the group data successfully string: " + JSON.stringify(data));
+                data.Attributes['user_id'] = userUuid;
             }
-        })
-
-        await db.put(params).promise();
-
-        return params.Item;
+        }).promise();
     }
 
     async update(UserID, data) {
         const params = {
-            TableName: this.tableName,
+            TableName: "users",
             Key: {
                 UserID: UserID
             },

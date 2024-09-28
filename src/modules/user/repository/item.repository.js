@@ -68,7 +68,7 @@ class ItemRepository {
          }).promise();
     }
 
-    async create(data) {
+    async create_old(data) {
 
         var db = await getDb();
         console.log("the data: " + JSON.stringify(data) + " and the table: " + this.tableName);
@@ -78,17 +78,21 @@ class ItemRepository {
         switch (this.tableName) {
             case "users": 
                 item = {
-                    user_id: uuidv4(),
                     user_name: data.user_name,
                     email: data.email,
                     password: data.password
-                }
+                };
+                key = {
+                    user_id: uuidv4()
+                };
                 break;
             case "groups":
                 item = {
-                    group_id: uuidv4(),
                     group_name: data.group_name
                 }
+                key = {
+                    user_id: uuidv4()
+                };
                 break;
             case "event":
                 item = {
@@ -109,12 +113,27 @@ class ItemRepository {
 
         const params = {
             TableName: this.tableName,
+            Key: key,
             Item: item,
+            ReturnValues: "ALL_NEW",
+
+
+            UpdateExpression: 'SET #group_name = :group_name, #members = :members',
+            ExpressionAttributeNames: {
+                "#group_name": "group_name",
+                "#members": "members"
+            },
+            ExpressionAttributeValues: {
+                ":group_name": data.group_name,
+                ":members": data.members
+            },
+            ReturnValues: `UPDATED_NEW`
         };
 
         console.log("The params: " + JSON.stringify(params));
 
-        return db.putItem(params, function(error, data) {
+
+        return db.update(params, function(error, data) {
             if (error) {
                 console.log("the error: " + error);
             } else {

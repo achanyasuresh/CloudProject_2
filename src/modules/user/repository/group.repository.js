@@ -7,6 +7,36 @@ class GroupRepository {
         this.tableName = "groups";
     }
 
+    async create(data) {
+        var db = await getDb();
+        const groupUuid = uuidv4();
+
+        const params = {
+            TableName: this.tableName,
+            Key: {
+                group_id: groupUuid
+            },
+            UpdateExpression: 'SET #group_name = :group_name, #members = :members',
+            ExpressionAttributeNames: {
+                "#group_name": "group_name",
+                "#members": "members"
+            },
+            ExpressionAttributeValues: {
+                ":group_name": data.group_name,
+                ":members": data.members
+            },
+            ReturnValues: `UPDATED_NEW`
+        };
+
+        return db.update(params, function (error, data) {
+            if (error) {
+                console.log("Couldn't create the group: " + error);
+            } else {
+                data.Attributes['group_id'] = groupUuid;
+            }
+        }).promise();
+    }
+
     async findByID(itemId) {
 
         var db = await getDb();
@@ -47,14 +77,13 @@ class GroupRepository {
                 ":group_name": data.group_name,
                 ":members": data.members
             },
-            ReturnValues: `UPDATED_NEW`,
+            ReturnValues: `UPDATED_NEW`
         };
 
         return await db.update(params, function (error, data) {
             if (error) {
                 console.log("Couldn't update the group: " + error);
             } else {
-                console.log("updated the group data successfully: " + data);
                 console.log("updated the group data successfully string: " + JSON.stringify(data));
             }
         }).promise();

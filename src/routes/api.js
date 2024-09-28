@@ -21,7 +21,8 @@ module.exports = async (app) => {
     app.put(`/api/v1/users/:UserID`, authenticationService.validateJwt, userController.update);
     app.delete(`/api/v1/users/:UserID`, authenticationService.validateJwt, userController.deleteByID);
 
-    app.post('/api/v1/group', authenticationService.validateJwt, groupController.create);
+    // app.post('/api/v1/group', authenticationService.validateJwt, groupController.create);
+    app.post('/api/v1/group', groupController.create);
     app.get('/api/v1/group', authenticationService.validateJwt, groupController.findByID);
     app.put('/api/v1/group', authenticationService.validateJwt, groupController.update);
 

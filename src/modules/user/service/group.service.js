@@ -6,8 +6,11 @@ const groupRepo = new GroupRepository();
 class ItemService {
     
     async create(data) {
-        var itemRepository = new ItemRepository("groups");
-        return await itemRepository.create(data);
+        
+        if (!data.members) {
+            data.members = [];
+        }
+        return await groupRepo.create(data);
     }
 
     async findByID(itemId) {
