@@ -63,7 +63,7 @@ class NotificationService {
             ReturnSubscriptionArn: true
         };
 
-        console.log('subscribing to the topic');
+        console.log('subscribing to the topic with email ' + email);
 
         var sns = await new AWS.SNS({ apiVersion: "2010-03-31" });
             
