@@ -69,7 +69,8 @@ class NotificationService {
             
         sns.subscribe(params, function (err, data) {
                 if (err) {
-                    console.log(err, err.stack);
+                    console.log("We couldn't subscribe to the topic: " + error);
+                    // console.log(err, err.stack);
                 }
                 else {
                     console.log(data);
