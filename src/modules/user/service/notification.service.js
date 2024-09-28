@@ -66,7 +66,8 @@ class NotificationService {
         console.log('subscribing to the topic with email ' + email);
 
         var sns = await new AWS.SNS({ apiVersion: "2010-03-31" });
-            
+        console.log("created the sns object");
+        
         sns.subscribe(params, function (err, data) {
                 if (err) {
                     console.log("We couldn't subscribe to the topic: " + error);
