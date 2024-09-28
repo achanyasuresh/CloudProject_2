@@ -28,7 +28,7 @@ class GroupController {
     }
 
     async update(req, res) {
-        const data = await groupService.update(req.params.groupId, req.body)
+        const data = await groupService.update(req.query.groupId, req.body)
 
         res.json(data)
     }

@@ -40,8 +40,8 @@ class GroupRepository {
             },
             UpdateExpression: 'SET #group_name = :group_name, #members = :members',
             ExpressionAttributeNames: {
-                ":group_name": "group_name",
-                ":members": "members"
+                "#group_name": "group_name",
+                "#members": "members"
             },
             ExpressionAttributeValues: {
                 ":group_name": data.group_name,
