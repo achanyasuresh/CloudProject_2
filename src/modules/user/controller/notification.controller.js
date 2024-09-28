@@ -7,7 +7,7 @@ class NotificationController {
 
     async sendNotification(request, response) {
 
-        await notificationService.sendNotification(request.data);
+        await notificationService.sendNotification(request.body);
 
         response.status(200)
             .json({
