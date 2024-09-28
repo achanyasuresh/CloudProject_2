@@ -45,7 +45,7 @@ const initialSetup = async function () {
             accessKeyId: creds.db_access_key_id,
             secretAccessKey: creds.db_secret_access_key,
             region: "us-east-1",
-            endpoint: "https://dynamodb.us-east-1.amazonaws.com"
+            // endpoint: "https://dynamodb.us-east-1.amazonaws.com"
         });
 
         db = new AWS.DynamoDB.DocumentClient({ 
