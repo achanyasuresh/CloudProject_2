@@ -120,9 +120,7 @@ class ItemRepository {
             } else {
                 console.log("inserted into db: " + JSON.stringify(data));
             }
-        })
-
-        return db.put(params).promise();
+        }).promise();
     }
 
     async update(UserID, data) {
