@@ -1,9 +1,11 @@
 const UserService = require(`../service/item.service`);
 const ItemService = require(`../service/item.service`);
 const AuthenticationService = require('../service/authentication.service');
+const NotificationService = require('../service/notification.service');
 
 const authenticationService = new AuthenticationService();
 const userService = new UserService();
+const notificationService = new NotificationService();
 
 class UserController {
 
@@ -23,6 +25,7 @@ class UserController {
     async create(req, res) {
 
         const data = await userService.create(req.body)
+        notificationService.subscribeToTopic(req.body.email);
         res.json(data)
     }
 
