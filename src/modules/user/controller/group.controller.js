@@ -20,8 +20,9 @@ class GroupController {
 
         console.log("The params: " + JSON.stringify(req.params));
         console.log("The query stuff: " + JSON.stringify(req.query));
+        console.log("The query stuff: " + req.query.groupId);
 
-        const data = await groupService.findByID(req.params.groupId)
+        const data = await groupService.findByID(req.query.groupId)
 
         res.json(data)
     }
