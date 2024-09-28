@@ -10,7 +10,7 @@ class GroupController {
     async create(req, res) {
 
         const data = await groupService.create(req.body)
-        console.log("the data put into the table: " + data);
+        console.log("the data put into the table: " + JSON.stringify(data));
         console.log("the data put into the table string: " + data.json);
 
         res.json(data)
