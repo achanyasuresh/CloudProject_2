@@ -15,7 +15,7 @@ let secretKey;
 
 let db = null;
 
-const getDb = async function() {
+const getDb = async function () {
 
     if (db == null) {
         console.log("initialising db");
@@ -48,7 +48,9 @@ const initialSetup = async function () {
             endpoint: "https://dynamodb.us-east-1.amazonaws.com"
         });
 
-        db = new AWS.DynamoDB.DocumentClient({ convertEmptyValues: true });
+        db = new AWS.DynamoDB.DocumentClient({ 
+            endpoint: "https://dynamodb.us-east-1.amazonaws.com", 
+            convertEmptyValues: true });
 
     } catch (error) {
         console.log("The db credentials couldn't be accessed! ERROR: " + error);

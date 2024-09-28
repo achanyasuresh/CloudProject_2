@@ -1,13 +1,12 @@
 const { getAwsCreds } = require('../../../helpers/creds');
 const { utilConstants } = require('../../../helpers/constants');
 
-const AWS = require("aws-sdk");
-
-
 class NotificationService {
 
     async sendNotification(data) {
         const creds = await getAwsCreds();
+
+        const AWS = require("aws-sdk");
 
         AWS.config.update({
             accessKeyId: creds.db_access_key_id,
@@ -45,6 +44,8 @@ class NotificationService {
 
         console.log("setting up the sns creds");
         const creds = await getAwsCreds();
+
+        const AWS = require("aws-sdk");
         
         AWS.config.update({
             accessKeyId: creds.db_access_key_id,
@@ -55,29 +56,24 @@ class NotificationService {
         var params = {
             Protocol: utilConstants.SNS_SUBSCRIPTION_PROTOCOL,
             TopicArn: utilConstants.SNS_TOPIC_ARN,
-            // Attributes: {
-            //   '<attributeName>': 'STRING_VALUE',
-            //   /* '<attributeName>': ... */
-            // },
             Endpoint: email,
-            ReturnSubscriptionArn: true
         };
 
-        console.log('subscribing to the topic with email ' + email);
+        console.log('subscribing to the topic with params ' + JSON.stringify(params));
+        console.log("the aws object: " + JSON.stringify(AWS.config));
 
-        var sns = await new AWS.SNS({ apiVersion: "2010-03-31" });
+        var sns = new AWS.SNS({ apiVersion: "2010-03-31" })
+        .subscribe(params)
+        .promise();
         console.log("created the sns object");
-        
-        sns.subscribe(params, function (err, data) {
-                if (err) {
-                    console.log("We couldn't subscribe to the topic: " + error);
-                    // console.log(err, err.stack);
-                }
-                else {
+
+        sns.then((data) => {
                     console.log(data);
                 }
-            })
-            .promise();
+            )
+            .catch((error) => {
+                console.log("The email couldn't be subscribed to the topic: " + error);
+            });
     }
 
 }
