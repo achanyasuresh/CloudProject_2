@@ -16,14 +16,16 @@ class GroupRepository {
             Key: {
                 group_id: groupUuid
             },
-            UpdateExpression: 'SET #group_name = :group_name, #members = :members',
+            UpdateExpression: 'SET #group_name = :group_name, #members = :members, #group_files = :group_files',
             ExpressionAttributeNames: {
                 "#group_name": "group_name",
-                "#members": "members"
+                "#members": "members",
+                "#group_files": "group_files"
             },
             ExpressionAttributeValues: {
                 ":group_name": data.group_name,
-                ":members": data.members
+                ":members": data.members,
+                ":group_files": data.group_files
             },
             ReturnValues: `UPDATED_NEW`
         };

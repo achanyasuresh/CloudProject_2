@@ -3,12 +3,15 @@ const GroupRepository = require(`../repository/group.repository`);
 
 const groupRepo = new GroupRepository();
 
-class ItemService {
+class GroupService {
     
     async create(data) {
         
         if (!data.members) {
             data.members = [];
+        }
+        if (!data.group_files) {
+            data.group_files = [];
         }
         return await groupRepo.create(data);
     }
@@ -34,4 +37,4 @@ class ItemService {
 
 }
 
-module.exports = ItemService;
+module.exports = GroupService;
