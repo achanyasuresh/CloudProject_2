@@ -18,6 +18,8 @@ const getJwtCreds = async function() {
         await jwtInitialSetup();
     } 
 
+    console.log("the jwt creds: " + JSON.stringify(creds));
+
     return creds.JWT_SECRET_KEY;
 }
 
@@ -34,8 +36,7 @@ const jwtInitialSetup = async function () {
 
     try {
         const secretValue = await client.send(new GetSecretValueCommand({
-            SecretId: jwt_secret_name
-        ,
+            SecretId: jwt_secret_name,
             VersionStage: "AWSCURRENT",
         }));
 
