@@ -1,13 +1,15 @@
 const express = require('express');
 const { getDb, initialSetup } = require('./src/helpers/database');
 const cors = require('cors');
+const {utilConstants} = require('./src/helpers/constants');
 const app = express();
 const port = 8080;
 
 const bodyParser = require('body-parser');
+const req = require('express/lib/request');
 
 const corsOptions = {
-    origin: "http://54.161.222.205:3000"
+    origin: "http://" + utilConstants.EC2_IP + ":3000"
 };
 
 var db = null;
