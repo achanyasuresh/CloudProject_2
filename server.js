@@ -7,7 +7,7 @@ const port = 8080;
 const bodyParser = require('body-parser');
 
 const corsOptions = {
-    origin: "http://44.210.137.95:3000"
+    origin: "http://54.161.222.205:3000"
 };
 
 var db = null;
