@@ -49,7 +49,7 @@ class UserRepository {
         
         console.log("the params: " + JSON.stringify(params));
 
-        return db.query(params, function (err, data) {
+        return db.scan(params, function (err, data) {
             if (err) {
                 console.log(err);
                 
