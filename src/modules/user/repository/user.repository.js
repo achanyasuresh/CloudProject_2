@@ -1,10 +1,10 @@
-const {getDb} = require(`../../../helpers/database`);
-const {v4: uuidv4} = require('uuid');
+const { getDb } = require(`../../../helpers/database`);
+const { v4: uuidv4 } = require('uuid');
 
 class UserRepository {
     constructor(tableName) {
         this.tableName = tableName;
-    }   
+    }
 
     async findByID(itemId) {
         console.log("The itemId : " + itemId + " and the table: " + this.tableName);
@@ -17,24 +17,24 @@ class UserRepository {
                 ":id": itemId
             }
         };
-        
+
         console.log("the params: " + JSON.stringify(params));
 
         return db.query(params, function (err, data) {
             if (err) {
                 console.log(err);
-                
+
             } else {
                 console.log("yayy: " + JSON.stringify(data));
             }
-         }).promise();
+        }).promise();
     }
 
     async findByEmail(userIds) {
         let attributeValues = {};
         let index = 0;
 
-        userIds.forEach(function(value) {
+        userIds.forEach(function (value) {
             index += 1;
             var attributeKey = ":email" + index;
             attributeValues[attributeKey.toString()] = value;
@@ -46,17 +46,17 @@ class UserRepository {
             FilterExpression: 'email in (' + Object.keys(attributeValues).toString() + ')',
             ExpressionAttributeValues: attributeValues
         };
-        
+
         console.log("the params: " + JSON.stringify(params));
 
         return db.scan(params, function (err, data) {
             if (err) {
                 console.log(err);
-                
+
             } else {
                 console.log("yayy: " + JSON.stringify(data));
             }
-         }).promise();
+        }).promise();
     }
 
     async create(data) {
@@ -94,6 +94,8 @@ class UserRepository {
     }
 
     async update(UserID, data) {
+
+        var db = await getDb();
 
         if (!data.group_ids) {
             data.group_ids = [];
