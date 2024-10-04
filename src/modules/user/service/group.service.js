@@ -26,13 +26,15 @@ class GroupService {
 
         var users = await userRepo.findByEmail(userIds);
 
-        for (let user of users) {
+        console.log("the users found with the email: " + users.json());
+
+        for (let user of users.json()) {
             if (!user.group_ids) {
                 user.group_ids = [group_id];
             } else {
                 user.group_ids.append(group_id);
             }
-            
+
             await userRepo.update(user.user_id, user);
         }
 
