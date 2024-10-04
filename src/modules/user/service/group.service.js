@@ -26,7 +26,9 @@ class GroupService {
 
         var users = await userRepo.findByEmail(userIds);
 
-        console.log("the users found with the email: " + users.json());
+        console.log("the users found with the email: " + users);
+        console.log("the users found with the email: " + JSON.stringify(users));
+        console.log("the users found with the email: " + JSON.parse(users));
 
         for (let user of users.json()) {
             if (!user.group_ids) {
