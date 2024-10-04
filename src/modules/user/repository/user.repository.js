@@ -103,7 +103,7 @@ class UserRepository {
         const params = {
             TableName: "users",
             Key: {
-                UserID: UserID
+                user_id: UserID
             },
             UpdateExpression: `set #Username = :Username, #group_ids = :group_ids`,
             ExpressionAttributeNames: {
