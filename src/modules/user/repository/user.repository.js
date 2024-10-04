@@ -111,7 +111,7 @@ class UserRepository {
                 '#group_ids': 'group_ids'
             },
             ExpressionAttributeValues: {
-                ":Username": data.Username,
+                ":Username": data.user_name,
                 ":group_ids": data.group_ids
             },
             ReturnValues: `UPDATED_NEW`,
