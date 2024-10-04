@@ -1,5 +1,4 @@
-const UserService = require(`../service/item.service`);
-const ItemService = require(`../service/item.service`);
+const UserService = require(`../service/user.service`);
 const AuthenticationService = require('../service/authentication.service');
 const NotificationService = require('../service/notification.service');
 
