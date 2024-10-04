@@ -16,16 +16,23 @@ class GroupService {
         }
         var group_data_raw = await groupRepo.create(data);
         var group_data = group_data_raw.Attributes;
+        var group_id = group_data.group_id;
 
         var members = group_data.members;
 
         var userIds = members.map((user, index) => {
-            return user.user_id
+            return user.email
         });
 
-        var users = await userRepo.findByListIds(userIds);
+        var users = await userRepo.findByEmail(userIds);
 
         for (let user of users) {
+            if (!user.group_ids) {
+                user.group_ids = [group_id];
+            } else {
+                user.group_ids.append(group_id);
+            }
+            
             await userRepo.update(user.user_id, user);
         }
 

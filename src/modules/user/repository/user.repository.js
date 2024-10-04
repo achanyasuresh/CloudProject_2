@@ -30,20 +30,20 @@ class UserRepository {
          }).promise();
     }
 
-    async findByListIds(userIds) {
+    async findByEmail(userIds) {
         let attributeValues = {};
         let index = 0;
 
         userIds.forEach(function(value) {
             index += 1;
-            var attributeKey = ":user_id" + index;
+            var attributeKey = ":email" + index;
             attributeValues[attributeKey.toString()] = value;
         });
 
         var db = await getDb();
         var params = {
             TableName: "users",
-            FilterExpression: 'user_id in (' + Object.keys(attributeValues).toString() + ')',
+            FilterExpression: 'email in (' + Object.keys(attributeValues).toString() + ')',
             ExpressionAttributeValues: attributeValues
         };
         
