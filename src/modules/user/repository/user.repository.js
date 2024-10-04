@@ -31,11 +31,19 @@ class UserRepository {
     }
 
     async findByListIds(userIds) {
-        let listUserIds = userIds.map((ele, index) => `${ele}`).join(', ');
+        let attributeValues = {};
+
+        userIds.forEach(function(value) {
+            index++;
+            var attributeKey = ":user_id" + index;
+            attributeValues[attributeKey.toString()] = value;
+        });
+
         var db = await getDb();
         var params = {
             TableName: "users",
-            FilterExpression: `user_id in (${listUserIds})` 
+            FilterExpression: 'user_id in (' + Object.keys(attributeValues).toString() + ')',
+            ExpressionAttributeValues: attributeValues
         };
         
         console.log("the params: " + JSON.stringify(params));
