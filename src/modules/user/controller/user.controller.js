@@ -24,7 +24,7 @@ class UserController {
 
     async findByListIds(req, res) {
 
-        const data = await userService.findByID(req.body.userIds)
+        const data = await userService.findByListIds(req.body.userIds)
         res.json(data)
     }
 
