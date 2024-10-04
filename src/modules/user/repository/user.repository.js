@@ -105,7 +105,7 @@ class UserRepository {
             Key: {
                 UserID: UserID
             },
-            UpdateExpression: `set #Username = :Username and #group_ids = :group_ids`,
+            UpdateExpression: `set #Username = :Username, #group_ids = :group_ids`,
             ExpressionAttributeNames: {
                 '#Username': `Username`,
                 '#group_ids': 'group_ids'
