@@ -16,7 +16,7 @@ class UserService {
     }
 
     async findByListIds(userIds) {
-        const data = await userRepository.findByListIds(itemId);
+        const data = await userRepository.findByListIds(userIds);
 
         console.log("the data : " + JSON.stringify(data));
         if (data) {
