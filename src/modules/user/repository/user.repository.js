@@ -31,7 +31,7 @@ class UserRepository {
     }
 
     async findByListIds(userIds) {
-        let listUserIds = userIds.map((_, index) => `:userIds${index}`).join(', ');
+        let listUserIds = userIds.map((ele, index) => `${ele}`).join(', ');
         var db = await getDb();
         var params = {
             TableName: "users",
