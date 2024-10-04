@@ -94,17 +94,23 @@ class UserRepository {
     }
 
     async update(UserID, data) {
+
+        if (!data.group_ids) {
+            data.group_ids = [];
+        }
         const params = {
             TableName: "users",
             Key: {
                 UserID: UserID
             },
-            UpdateExpression: `set #Username = :Username`,
+            UpdateExpression: `set #Username = :Username and #group_ids = :group_ids`,
             ExpressionAttributeNames: {
                 '#Username': `Username`,
+                '#group_ids': 'group_ids'
             },
             ExpressionAttributeValues: {
                 ":Username": data.Username,
+                ":group_ids": data.group_ids
             },
             ReturnValues: `UPDATED_NEW`,
         };
