@@ -28,9 +28,8 @@ class GroupService {
 
         console.log("the users found with the email: " + users);
         console.log("the users found with the email: " + JSON.stringify(users));
-        console.log("the users found with the email: " + JSON.parse(users));
 
-        for (let user of users.json()) {
+        for (let user of users.Items) {
             if (!user.group_ids) {
                 user.group_ids = [group_id];
             } else {
