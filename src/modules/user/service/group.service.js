@@ -33,7 +33,7 @@ class GroupService {
             if (!user.group_ids) {
                 user.group_ids = [group_id];
             } else {
-                user.group_ids.append(group_id);
+                user.group_ids = user.group_ids.push(group_id);
             }
 
             await userRepo.update(user.user_id, user);
