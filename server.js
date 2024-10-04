@@ -9,7 +9,7 @@ const bodyParser = require('body-parser');
 const req = require('express/lib/request');
 
 const corsOptions = {
-    origin: "http://" + utilConstants.EC2_IP
+    origin: "*",
 };
 
 var db = null;
