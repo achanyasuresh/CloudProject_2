@@ -32,9 +32,10 @@ class UserRepository {
 
     async findByListIds(userIds) {
         let attributeValues = {};
+        let index = 0;
 
         userIds.forEach(function(value) {
-            index++;
+            index += 1;
             var attributeKey = ":user_id" + index;
             attributeValues[attributeKey.toString()] = value;
         });
