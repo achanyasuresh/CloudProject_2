@@ -30,6 +30,26 @@ class UserRepository {
          }).promise();
     }
 
+    async findByListIds(userIds) {
+        let listUserIds = userIds.map((_, index) => `:userIds${index}`).join(', ');
+        var db = await getDb();
+        var params = {
+            TableName: "users",
+            FilterExpression: `user_id in (${listUserIds})` 
+        };
+        
+        console.log("the params: " + JSON.stringify(params));
+
+        return db.query(params, function (err, data) {
+            if (err) {
+                console.log(err);
+                
+            } else {
+                console.log("yayy: " + JSON.stringify(data));
+            }
+         }).promise();
+    }
+
     async create(data) {
         var db = await getDb();
 

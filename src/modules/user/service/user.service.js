@@ -15,6 +15,17 @@ class UserService {
         return data;
     }
 
+    async findByListIds(userIds) {
+        const data = await userRepository.findByListIds(itemId);
+
+        console.log("the data : " + JSON.stringify(data));
+        if (data) {
+            return data.Items;
+        }
+
+        return data;
+    }
+
     async create(data) {
         var itemRepository = new ItemRepository("users");
         console.log("we've reached the service layer");

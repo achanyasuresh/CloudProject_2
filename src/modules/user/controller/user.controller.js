@@ -22,6 +22,12 @@ class UserController {
         res.json(data)
     }
 
+    async findByListIds(req, res) {
+
+        const data = await userService.findByID(req.body.userIds)
+        res.json(data)
+    }
+
     async create(req, res) {
 
         const data = await userService.create(req.body)

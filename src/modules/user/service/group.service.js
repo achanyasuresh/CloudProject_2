@@ -13,7 +13,9 @@ class GroupService {
         if (!data.group_files) {
             data.group_files = [];
         }
-        return await groupRepo.create(data);
+        var group_data = await groupRepo.create(data);
+
+        
     }
 
     async findByID(itemId) {

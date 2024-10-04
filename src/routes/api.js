@@ -22,6 +22,7 @@ module.exports = async (app) => {
     app.get('/api/v1/test', userController.test);
 
     app.get(`/api/v1/users`, authenticationService.validateJwt, userController.findByID);
+    app.post(`/api/v1/users/fetch`, authenticationService.validateJwt, userController.findByListIds);
     app.post(`/api/v1/users`, userController.create);
     app.put(`/api/v1/users/:UserID`, authenticationService.validateJwt, userController.update);
     app.delete(`/api/v1/users/:UserID`, authenticationService.validateJwt, userController.deleteByID);
