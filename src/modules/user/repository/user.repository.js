@@ -107,11 +107,11 @@ class UserRepository {
             },
             UpdateExpression: `set #Username = :Username, #group_ids = :group_ids`,
             ExpressionAttributeNames: {
-                '#Username': `Username`,
+                '#Username': `user_name`,
                 '#group_ids': 'group_ids'
             },
             ExpressionAttributeValues: {
-                ":Username": data.user_name,
+                ":Username": data.username,
                 ":group_ids": data.group_ids
             },
             ReturnValues: `UPDATED_NEW`,
