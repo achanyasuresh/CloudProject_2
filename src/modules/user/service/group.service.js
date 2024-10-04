@@ -30,10 +30,12 @@ class GroupService {
         console.log("the users found with the email: " + JSON.stringify(users));
 
         for (let user of users.Items) {
+            console.log("the user info: " + user);
+            console.log("The user info string: " + JSON.stringify(user));
             if (!user.group_ids) {
                 user.group_ids = [group_id];
             } else {
-                user.group_ids = user.group_ids.push(group_id);
+                user.group_ids.push(group_id);
             }
 
             await userRepo.update(user.user_id, user);
