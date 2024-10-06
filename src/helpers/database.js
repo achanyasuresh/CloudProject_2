@@ -26,33 +26,39 @@ const getDb = async function () {
     }
     return db;
 }
-
 const initialSetup = async function () {
     console.log("setting up db creds");
 
+    const config = { region: "us-east-1" }
+
+    let secretsManager = new AWS.SecretsManager(config);
     try {
-        // prod stuff
-        const creds = await getAwsCreds();
+        const secretValue = await client.send(new GetSecretValueCommand({
+            SecretId: secret_name,
+            VersionStage: "AWSCURRENT",
+        }));
 
-        // const creds = {
-        // }
-
-        console.log("the creds: " + JSON.stringify(creds));
+        // Process the secretValue
+        const creds = JSON.parse(secretValue.SecretString);
 
         AWS.config.update({
             accessKeyId: creds.db_access_key_id,
             secretAccessKey: creds.db_secret_access_key,
             region: "us-east-1",
+            // endpoint: "https://dynamodb.us-east-1.amazonaws.com"
         });
 
-        db = new AWS.DynamoDB.DocumentClient({
-            endpoint: "https://dynamodb.us-east-1.amazonaws.com",
-            convertEmptyValues: true
-        });
+        db = new AWS.DynamoDB.DocumentClient({ 
+            endpoint: "https://dynamodb.us-east-1.amazonaws.com", 
+            convertEmptyValues: true });
 
     } catch (error) {
         console.log("The db credentials couldn't be accessed! ERROR: " + error);
     }
+
+    // const secret = response.SecretString;
+
+    // console.log("The secrets: " + secret);
 
 }
 
