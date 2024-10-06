@@ -94,7 +94,7 @@ class GroupService {
             .then(items => items.Items[0]);
 
         if (!group_data['group_files']) {
-            group_data['group_files'] = file;
+            group_data['group_files'] = [file];
         } else {
             group_data['group_files'].push(file);
         }
