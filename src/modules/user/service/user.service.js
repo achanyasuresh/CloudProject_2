@@ -1,6 +1,8 @@
 const UserRepository = require("../repository/user.repository");
 const ItemRepository = require("../repository/item.repository");
 
+const userRepo = new UserRepository();
+
 class UserService {
     constructor() {
         this.itemRepository = new ItemRepository("users");
@@ -8,7 +10,7 @@ class UserService {
 
     async findByID(itemId) {
         console.log("at the service level");
-        const data = await UserRepository.findByID(itemId);
+        const data = await userRepo.findByID(itemId);
         console.log("the data : " + JSON.stringify(data));
         if (data) {
             return data.Items;
