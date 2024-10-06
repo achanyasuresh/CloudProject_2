@@ -33,7 +33,7 @@ class UserService {
         console.log("the data: " + JSON.stringify(data));
     console.log("Item Repository instance:", this.itemRepository);
     console.log("Item Repository create method:", this.itemRepository.create);
-    return await this.userRepo.create(data);
+    return await userRepo.create(data);
     }
 
     async update(UserID, data) {
