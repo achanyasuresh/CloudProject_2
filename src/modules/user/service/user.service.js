@@ -39,7 +39,11 @@ class UserService {
 
         var group_data_raw = await groupRepo.create({
             "group_name": data.user_name + "'s Main group",
-            "members": [ data.email ]
+            "members": [{
+                "email": data.email,
+                "user_name": data.user_name,
+                "role": "Lead"
+            }]
         });
 
         var group_data = group_data_raw.Attributes;
