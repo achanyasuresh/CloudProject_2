@@ -1,5 +1,6 @@
-const { getDb } = require('../../../helpers/database');
+const { getDb, getS3 } = require('../../../helpers/database');
 const { v4: uuidv4 } = require('uuid');
+const { utilConstants } = require('../../../helpers/constants');
 
 class GroupRepository {
 
@@ -136,6 +137,22 @@ class GroupRepository {
         }).promise();
 
         return response;
+    }
+
+    async uploadToS3(group_id, file_name, file_stream) {
+
+        var s3 = await getS3();
+        const params = {
+            Bucket: utilConstants.S3_BUCKET_NAME,
+            Key: group_id + "/" + file_name,
+            Body: file_stream
+        };
+
+        return await s3.upload(params, function (error, data) {
+            if (error) {
+                console.log("There was an issue uploading to S3: " + error);
+            }
+        }).promise();
     }
 
     async deleteByID(UserID) {

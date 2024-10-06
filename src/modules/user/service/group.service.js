@@ -78,6 +78,21 @@ class GroupService {
         return await groupRepo.update(groupId, group_data[0]);
     }
 
+    async uploadFileSubmission(groupId, file_name, file_stream) {
+        return await groupRepo.uploadToS3(groupId, file_name, file_stream);
+        // var file_data = await groupRepo.uploadToS3(groupId, file_name, file_stream);
+        // var file = {
+        //     "file_path": 
+        // }
+        // var group_data = await groupRepo.findByID(groupId)
+        //     .then(items => items.Items);
+
+        // if (!group_data['group_files']) {
+            
+        // }
+
+    }
+
     async deleteByID(UserID) {
         return await itemRepository.deleteByID(UserID);
     }

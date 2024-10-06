@@ -13,6 +13,7 @@ const client = new SecretsManagerClient({
 });
 
 let db = null;
+let s3 = null;
 
 const getDb = async function () {
 
@@ -30,10 +31,10 @@ const initialSetup = async function () {
 
     try {
         // prod stuff
-        // const creds = await getAwsCreds();
+        const creds = await getAwsCreds();
 
-        const creds = {
-        }
+        // const creds = {
+        // }
 
         AWS.config.update({
             accessKeyId: creds.db_access_key_id,
@@ -51,7 +52,44 @@ const initialSetup = async function () {
 
 }
 
+
+const getS3 = async function () {
+
+    if (s3 == null) {
+        console.log("initialising S3");
+        await initialSetupS3();
+    } else {
+        console.log("S3 already initialised");
+    }
+    return s3;
+}
+
+const initialSetupS3 = async function () {
+    console.log("setting up db creds");
+
+    try {
+        // prod stuff
+        // const creds = await getAwsCreds();
+
+        const creds = {
+        }
+
+        AWS.config.update({
+            accessKeyId: creds.db_access_key_id,
+            secretAccessKey: creds.db_secret_access_key,
+            region: "us-east-1",
+        });
+
+        s3 = new AWS.S3();
+
+    } catch (error) {
+        console.log("The db credentials couldn't be accessed! ERROR: " + error);
+    }
+
+}
+
 module.exports = {
     getDb,
-    initialSetup
+    initialSetup,
+    getS3
 };

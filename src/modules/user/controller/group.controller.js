@@ -34,10 +34,19 @@ class GroupController {
     }
 
     async updateMembers(req, res) {
-        console.log("in controller");
         const data = await groupService.updateMembers(req.query.groupId, req.body.members)
 
         res.json(data)
+    }
+
+    async uploadFileSubmission(req, res) {
+
+        console.log("the file was captured: " + req.files.submission);
+        console.log("the file was captured: " + req.files.submission.name);
+        
+        const data = await groupService.uploadFileSubmission(req.query.groupId, req.files.submission.name, req.files.submission.data);
+        
+        res.json(data);
     }
 
 }

@@ -15,10 +15,10 @@ var creds = null;
 const getJwtCreds = async function() {
 
     if (creds == null) {
-        creds = {
-            "JWT_SECRET_KEY":"7ee7dad0-593d-42f9-8003-b637d1d03873"
-        }
-        // await jwtInitialSetup();
+        // creds = {
+        //     "JWT_SECRET_KEY":"7ee7dad0-593d-42f9-8003-b637d1d03873"
+        // }
+        await jwtInitialSetup();
     } 
 
     console.log("the jwt creds: " + JSON.stringify(creds));
