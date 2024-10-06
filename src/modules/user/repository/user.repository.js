@@ -3,7 +3,7 @@ const { v4: uuidv4 } = require('uuid');
 
 class UserRepository {
     constructor(tableName) {
-        this.tableName = tableName;
+        this.tableName = "users";
     }
 
     async findByID(itemId) {
