@@ -1,9 +1,10 @@
 const ItemRepository = require(`../repository/item.repository`);
 const GroupRepository = require(`../repository/group.repository`);
-const userRepo = require('../repository/user.repository');
+const UserRepository = require('../repository/user.repository');
 
 const { utilConstants } = require('../../../helpers/constants');
 const groupRepo = new GroupRepository();
+const userRepo = new UserRepository();
 
 class GroupService {
 

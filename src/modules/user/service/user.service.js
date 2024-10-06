@@ -1,7 +1,9 @@
 const UserRepository = require("../repository/user.repository");
 const ItemRepository = require("../repository/item.repository");
+const GroupRepository = require("../repository/group.repository");
 
 const userRepo = new UserRepository();
+const groupRepo = new GroupRepository();
 
 class UserService {
     constructor() {
@@ -31,9 +33,16 @@ class UserService {
         console.log("we've reached the service layer");
         console.log("the data: " + JSON.stringify(data));
         console.log("the data: " + JSON.stringify(data));
-    console.log("Item Repository instance:", this.itemRepository);
-    console.log("Item Repository create method:", this.itemRepository.create);
-    return await userRepo.create(data);
+        console.log("Item Repository instance:", this.itemRepository);
+        console.log("Item Repository create method:", this.itemRepository.create);
+        var userData = await userRepo.create(data);
+
+        await groupRepo.create({
+            "group_name": data.user_name + "'s Main group",
+            "members": [ data.email ]
+        });
+
+        return userData;
     }
 
     async update(UserID, data) {
