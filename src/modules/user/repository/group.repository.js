@@ -2,6 +2,8 @@ const { getDb, getS3 } = require('../../../helpers/database');
 const { v4: uuidv4 } = require('uuid');
 const { utilConstants } = require('../../../helpers/constants');
 
+const { PutObjectCommand } = require("@aws-sdk/client-s3");
+
 class GroupRepository {
 
     constructor() {
@@ -139,20 +141,20 @@ class GroupRepository {
         return response;
     }
 
-    async uploadToS3(group_id, file_name, file_stream) {
+    async uploadToS3(group_id, file_name, file_stream, file_type) {
 
         var s3 = await getS3();
-        const params = {
+
+        const input = {
             Bucket: utilConstants.S3_BUCKET_NAME,
             Key: group_id + "/" + file_name,
-            Body: file_stream
-        };
+            Body: file_stream,
+            ContentType: file_type
+        }
 
-        return await s3.upload(params, function (error, data) {
-            if (error) {
-                console.log("There was an issue uploading to S3: " + error);
-            }
-        }).promise();
+        const params = new PutObjectCommand(input);
+
+        return await s3.send(params);
     }
 
     async deleteByID(UserID) {

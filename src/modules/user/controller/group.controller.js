@@ -41,10 +41,11 @@ class GroupController {
 
     async uploadFileSubmission(req, res) {
 
-        console.log("the file was captured: " + req.files.submission);
+        // console.log("the file was captured: " + req.files.submission);
         console.log("the file was captured: " + req.files.submission.name);
-        
-        const data = await groupService.uploadFileSubmission(req.query.groupId, req.files.submission.name, req.files.submission.data);
+        console.log("the file was captured: " + req.files.submission.mimetype);
+
+        const data = await groupService.uploadFileSubmission(req.query.groupId, req.files.submission.name, req.files.submission.data, req.files.submission.mimetype);
         
         res.json(data);
     }

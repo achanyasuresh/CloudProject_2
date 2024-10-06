@@ -2,6 +2,7 @@ const ItemRepository = require(`../repository/item.repository`);
 const GroupRepository = require(`../repository/group.repository`);
 const userRepo = require('../repository/user.repository');
 
+const {utilConstants} = require('../../../helpers/constants');
 const groupRepo = new GroupRepository();
 
 class GroupService {
@@ -78,19 +79,27 @@ class GroupService {
         return await groupRepo.update(groupId, group_data[0]);
     }
 
-    async uploadFileSubmission(groupId, file_name, file_stream) {
-        return await groupRepo.uploadToS3(groupId, file_name, file_stream);
-        // var file_data = await groupRepo.uploadToS3(groupId, file_name, file_stream);
-        // var file = {
-        //     "file_path": 
-        // }
-        // var group_data = await groupRepo.findByID(groupId)
-        //     .then(items => items.Items);
+    async uploadFileSubmission(group_id, file_name, file_stream, file_type) {
+        var file_data = await groupRepo.uploadToS3(group_id, file_name, file_stream, file_type);
+        var file = {
+            "file_name": file_name,
+            "file_path": utilConstants.CLOUDFRONT_DOMAIN + group_id + "/" + file_name
+        };
 
-        // if (!group_data['group_files']) {
-            
-        // }
+        var group_data = await groupRepo.findByID(group_id)
+            .then(items => items.Items[0]);
 
+        if (!group_data['group_files']) {
+            group_data['group_files'] = file;
+        } else {
+            group_data['group_files'].push(file);
+        }
+
+        console.log("The updated group data: " + JSON.stringify(group_data));
+
+        await groupRepo.update(group_id, group_data);
+
+        return file;
     }
 
     async deleteByID(UserID) {

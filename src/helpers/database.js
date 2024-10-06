@@ -1,4 +1,5 @@
 var AWS = require('aws-sdk');
+const { S3Client } = require("@aws-sdk/client-s3");
 const { getAwsCreds } = require('./creds');
 
 const {
@@ -42,9 +43,10 @@ const initialSetup = async function () {
             region: "us-east-1",
         });
 
-        db = new AWS.DynamoDB.DocumentClient({ 
-            endpoint: "https://dynamodb.us-east-1.amazonaws.com", 
-            convertEmptyValues: true });
+        db = new AWS.DynamoDB.DocumentClient({
+            endpoint: "https://dynamodb.us-east-1.amazonaws.com",
+            convertEmptyValues: true
+        });
 
     } catch (error) {
         console.log("The db credentials couldn't be accessed! ERROR: " + error);
@@ -69,21 +71,25 @@ const initialSetupS3 = async function () {
 
     try {
         // prod stuff
-        // const creds = await getAwsCreds();
+        const creds = await getAwsCreds();
 
-        const creds = {
-        }
+        // const creds = {
+        // }
 
         AWS.config.update({
             accessKeyId: creds.db_access_key_id,
             secretAccessKey: creds.db_secret_access_key,
-            region: "us-east-1",
+            region: "us-east-1"
         });
 
-        s3 = new AWS.S3();
+        s3 = new S3Client({
+            accessKeyId: creds.db_access_key_id,
+            secretAccessKey: creds.db_secret_access_key,
+            region: "us-east-1"
+        });
 
     } catch (error) {
-        console.log("The db credentials couldn't be accessed! ERROR: " + error);
+        console.log("The s3 credentials couldn't be accessed! ERROR: " + error);
     }
 
 }
