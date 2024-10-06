@@ -33,6 +33,13 @@ class GroupController {
         res.json(data)
     }
 
+    async updateMembers(req, res) {
+        console.log("in controller");
+        const data = await groupService.updateMembers(req.query.groupId, req.body.members)
+
+        res.json(data)
+    }
+
 }
 
 module.exports = GroupController;

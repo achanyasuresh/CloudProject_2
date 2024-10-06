@@ -30,6 +30,7 @@ module.exports = async (app) => {
     app.post('/api/v1/group', authenticationService.validateJwt, groupController.create);
     app.get('/api/v1/group', authenticationService.validateJwt, groupController.findByID);
     app.put('/api/v1/group', authenticationService.validateJwt, groupController.update);
+    app.put('/api/v1/group/members', authenticationService.validateJwt, groupController.updateMembers);
 
     app.post('/api/v1/event', authenticationService.validateJwt, eventController.create);
     app.get('/api/v1/event', authenticationService.validateJwt, eventController.findByID);

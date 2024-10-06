@@ -64,6 +64,8 @@ class GroupRepository {
 
     async update(groupId, data) {
 
+        console.log("the updating value: " + JSON.stringify(data));
+
         var db = await getDb();
         const params = {
             TableName: this.tableName,
@@ -91,6 +93,42 @@ class GroupRepository {
                 console.log("updated the group data successfully string: " + JSON.stringify(data));
             }
         }).promise();
+    }
+    
+    async updateMembers(groupId, members) {
+
+        console.log("in repo");
+        if (!members) {
+            members = [];
+        }
+
+        var db = await getDb();
+        const params = {
+            TableName: this.tableName,
+            Key: {
+                group_id: groupId
+            },
+            UpdateExpression: 'SET #members = list_append(#members, :members)',
+            ExpressionAttributeNames: {
+                "#members": "members",
+            },
+            ExpressionAttributeValues: {
+                ":members": members,
+            },
+            ReturnValues: `UPDATED_NEW`
+        };
+
+        console.log("the params for members: " + JSON.stringify(params));
+
+        var response = await db.update(params, function (error, data) {
+            if (error) {
+                console.log("Couldn't update the group: " + error);
+            } else {
+                console.log("updated the group member data successfully string: " + JSON.stringify(data));
+            }
+        }).promise();
+
+        return response;
     }
 
     async deleteByID(UserID) {

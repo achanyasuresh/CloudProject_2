@@ -5,9 +5,9 @@ const userRepo = require('../repository/user.repository');
 const groupRepo = new GroupRepository();
 
 class GroupService {
-    
+
     async create(data) {
-        
+
         if (!data.members) {
             data.members = [];
         }
@@ -58,6 +58,24 @@ class GroupService {
 
     async update(groupId, data) {
         return await groupRepo.update(groupId, data)
+    }
+
+    async updateMembers(groupId, members) {
+        console.log("in service");
+        var group_data = await groupRepo.findByID(groupId)
+            .then((items) => {
+                return items.Items;
+            });
+
+        if (!members) {
+            members = [];
+        }
+
+        group_data[0]['members'].push(members);
+
+        console.log("the final group data: " + JSON.stringify(group_data));
+
+        return await groupRepo.update(groupId, group_data[0]);
     }
 
     async deleteByID(UserID) {
