@@ -14,6 +14,10 @@ class GroupRepository {
         var db = await getDb();
         const groupUuid = uuidv4();
 
+        if (!data.group_files) {
+            data.group_files = [];
+        }
+
         const params = {
             TableName: this.tableName,
             Key: {
