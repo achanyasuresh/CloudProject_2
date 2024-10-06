@@ -1,5 +1,5 @@
-const {getDb} = require('../../../helpers/database');
-const {v4: uuidv4} = require('uuid');
+const { getDb } = require('../../../helpers/database');
+const { v4: uuidv4 } = require('uuid');
 
 class GroupRepository {
 
@@ -49,17 +49,17 @@ class GroupRepository {
                 ":id": itemId
             }
         };
-        
+
         console.log("the params: " + JSON.stringify(params));
 
         return db.query(params, function (err, data) {
             if (err) {
                 console.log(err);
-                
+
             } else {
                 console.log("group: " + JSON.stringify(data));
             }
-         }).promise();
+        }).promise();
     }
 
     async update(groupId, data) {
@@ -67,22 +67,29 @@ class GroupRepository {
         console.log("the updating value: " + JSON.stringify(data));
 
         var db = await getDb();
+
+        var set_expression = 'SET #group_name = :group_name, #members = :members';
+        var expression_names = {
+            "#group_name": "group_name",
+            "#members": "members"
+        };
+        var expression_values = {
+            ":group_name": data.group_name,
+            ":members": data.members
+        }
+        if (data.group_files) {
+            set_expression += ', #group_files = :group_files';
+            expression_names["#group_files"] = "group_files";
+            expression_values[":group_files"] = data.group_files;
+        }
         const params = {
             TableName: this.tableName,
             Key: {
                 group_id: groupId
             },
-            UpdateExpression: 'SET #group_name = :group_name, #members = :members, #group_files = :group_files',
-            ExpressionAttributeNames: {
-                "#group_name": "group_name",
-                "#members": "members",
-                "#group_files": "group_files"
-            },
-            ExpressionAttributeValues: {
-                ":group_name": data.group_name,
-                ":members": data.members,
-                ":group_files": data.group_files
-            },
+            UpdateExpression: set_expression,
+            ExpressionAttributeNames: expression_names,
+            ExpressionAttributeValues: expression_values,
             ReturnValues: `UPDATED_NEW`
         };
 
@@ -94,7 +101,7 @@ class GroupRepository {
             }
         }).promise();
     }
-    
+
     async updateMembers(groupId, members) {
 
         console.log("in repo");
