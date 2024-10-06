@@ -37,6 +37,8 @@ const initialSetup = async function () {
         // const creds = {
         // }
 
+        console.log("the creds: " + JSON.stringify(creds));
+
         AWS.config.update({
             accessKeyId: creds.db_access_key_id,
             secretAccessKey: creds.db_secret_access_key,

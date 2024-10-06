@@ -13,7 +13,10 @@ class UserRepository {
         console.log("the db: " + JSON.stringify(db));
         var params = {
             TableName: "users",
-            KeyConditionExpression: "user_id = :id",
+            KeyConditionExpression: "#user_id = :id",
+            ExpressionAttributeNames: {
+                "#user_id": "user_id"
+            },
             ExpressionAttributeValues: {
                 ":id": itemId
             }
