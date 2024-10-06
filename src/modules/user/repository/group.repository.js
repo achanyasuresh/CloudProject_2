@@ -47,7 +47,10 @@ class GroupRepository {
         var db = await getDb();
         var params = {
             TableName: this.tableName,
-            KeyConditionExpression: "group_id = :id",
+            KeyConditionExpression: "#group_id = :id",
+            ExpressionAttributeNames: {
+                "#group_id": "group_id"
+            },
             ExpressionAttributeValues: {
                 ":id": itemId
             }
