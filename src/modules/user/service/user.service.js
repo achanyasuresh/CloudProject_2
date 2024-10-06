@@ -37,10 +37,15 @@ class UserService {
         console.log("Item Repository create method:", this.itemRepository.create);
         var userData = await userRepo.create(data);
 
-        await groupRepo.create({
+        var group_data_raw = await groupRepo.create({
             "group_name": data.user_name + "'s Main group",
             "members": [ data.email ]
         });
+
+        var group_data = group_data_raw.Attributes;
+        var group_id = group_data.group_id;
+
+        userData['group_id'] = group_id;
 
         return userData;
     }
