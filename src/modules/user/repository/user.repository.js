@@ -25,7 +25,7 @@ class UserRepository {
                 console.log(err);
 
             } else {
-                console.log("yayy: " + JSON.stringify(data));
+                console.log("user: " + JSON.stringify(data));
             }
         }).promise();
     }
@@ -54,7 +54,7 @@ class UserRepository {
                 console.log(err);
 
             } else {
-                console.log("yayy: " + JSON.stringify(data));
+                console.log("user2: " + JSON.stringify(data));
             }
         }).promise();
     }

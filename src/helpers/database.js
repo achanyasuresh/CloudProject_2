@@ -1,4 +1,5 @@
 var AWS = require('aws-sdk');
+const { getAwsCreds } = require('./creds');
 
 const {
     SecretsManagerClient,
@@ -10,8 +11,6 @@ const secret_name = "dev/db/creds";
 const client = new SecretsManagerClient({
     region: "us-east-1",
 });
-
-let secretKey;
 
 let db = null;
 
@@ -29,23 +28,17 @@ const getDb = async function () {
 const initialSetup = async function () {
     console.log("setting up db creds");
 
-    const config = { region: "us-east-1" }
-
-    let secretsManager = new AWS.SecretsManager(config);
     try {
-        const secretValue = await client.send(new GetSecretValueCommand({
-            SecretId: secret_name,
-            VersionStage: "AWSCURRENT",
-        }));
+        // prod stuff
+        // const creds = await getAwsCreds();
 
-        // Process the secretValue
-        const creds = JSON.parse(secretValue.SecretString);
+        const creds = {
+        }
 
         AWS.config.update({
             accessKeyId: creds.db_access_key_id,
             secretAccessKey: creds.db_secret_access_key,
             region: "us-east-1",
-            // endpoint: "https://dynamodb.us-east-1.amazonaws.com"
         });
 
         db = new AWS.DynamoDB.DocumentClient({ 
@@ -55,10 +48,6 @@ const initialSetup = async function () {
     } catch (error) {
         console.log("The db credentials couldn't be accessed! ERROR: " + error);
     }
-
-    // const secret = response.SecretString;
-
-    // console.log("The secrets: " + secret);
 
 }
 

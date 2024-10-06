@@ -57,7 +57,7 @@ class GroupRepository {
                 console.log(err);
                 
             } else {
-                console.log("yayy: " + JSON.stringify(data));
+                console.log("group: " + JSON.stringify(data));
             }
          }).promise();
     }

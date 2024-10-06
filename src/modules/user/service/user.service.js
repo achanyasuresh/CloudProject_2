@@ -1,48 +1,47 @@
-const UserRepository = require(`../repository/user.repository`);
-const ItemRepository = require(`../repository/item.repository`);
-const userRepository = require("../repository/user.repository");
+const UserRepository = require("../repository/user.repository");
+const ItemRepository = require("../repository/item.repository");
 
 class UserService {
+    constructor() {
+        this.itemRepository = new ItemRepository("users");
+    }
 
     async findByID(itemId) {
-        const data = await userRepository.findByID(itemId);
-
+        const data = await UserRepository.findByID(itemId);
         console.log("the data : " + JSON.stringify(data));
         if (data) {
             return data.Items;
         }
-
         return data;
     }
 
     async findByListIds(userIds) {
-        const data = await userRepository.findByEmail(userIds);
-
+        const data = await UserRepository.findByEmail(userIds);
         console.log("the data : " + JSON.stringify(data));
         if (data) {
             return data.Items;
         }
-
         return data;
     }
 
     async create(data) {
-        var itemRepository = new ItemRepository("users");
         console.log("we've reached the service layer");
         console.log("the data: " + JSON.stringify(data));
-        return await itemRepository.create(data);
+        console.log("the data: " + JSON.stringify(data));
+    console.log("Item Repository instance:", this.itemRepository);
+    console.log("Item Repository create method:", this.itemRepository.create);
+    return await this.itemRepository.create(data);
     }
 
     async update(UserID, data) {
-        return await itemRepository.update(UserID, {
+        return await this.itemRepository.update(UserID, {
             Username: data.Username
         });
     }
 
     async deleteByID(UserID) {
-        return await itemRepository.deleteByID(UserID);
+        return await this.itemRepository.deleteByID(UserID);
     }
-
 }
 
 module.exports = UserService;

@@ -56,7 +56,7 @@ class EventsRepository {
                 console.log(err);
                 
             } else {
-                console.log("yayy: " + JSON.stringify(data));
+                console.log("event: " + JSON.stringify(data));
             }
          }).promise();
     }
