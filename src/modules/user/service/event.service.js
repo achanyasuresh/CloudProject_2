@@ -22,6 +22,17 @@ class EventService {
         return data;
     }
 
+    async findAll(itemId) {
+        const data = await eventRepo.findAll();
+
+        console.log("the data : " + JSON.stringify(data));
+        if (data) {
+            return data.Items;
+        }
+
+        return data;
+    }
+
     async update(eventId, data) {
         return await eventRepo.update(eventId, data)
     }

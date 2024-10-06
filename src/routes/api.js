@@ -34,6 +34,7 @@ module.exports = async (app) => {
 
     app.post('/api/v1/event', authenticationService.validateJwt, eventController.create);
     app.get('/api/v1/event', authenticationService.validateJwt, eventController.findByID);
+    app.get('/api/v1/event/all', authenticationService.validateJwt, eventController.findAll);
     app.put('/api/v1/event', authenticationService.validateJwt, eventController.update);
 
     app.post('/api/v1/authenticate/login', authenticationController.login);

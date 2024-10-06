@@ -17,6 +17,13 @@ class EventController {
         res.json(data)
     }
 
+    async findAll(req, res) {
+
+        const data = await eventService.findAll()
+
+        res.json(data)
+    }
+
     async update(req, res) {
         const data = await eventService.update(req.query.eventId, req.body)
 
