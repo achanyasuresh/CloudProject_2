@@ -19,7 +19,7 @@ class UserService {
     }
 
     async findByListIds(userIds) {
-        const data = await UserRepository.findByEmail(userIds);
+        const data = await userRepo.findByEmail(userIds);
         console.log("the data : " + JSON.stringify(data));
         if (data) {
             return data.Items;
@@ -33,7 +33,7 @@ class UserService {
         console.log("the data: " + JSON.stringify(data));
     console.log("Item Repository instance:", this.itemRepository);
     console.log("Item Repository create method:", this.itemRepository.create);
-    return await this.itemRepository.create(data);
+    return await this.userRepo.create(data);
     }
 
     async update(UserID, data) {
