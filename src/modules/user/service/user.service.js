@@ -7,6 +7,7 @@ class UserService {
     }
 
     async findByID(itemId) {
+        console.log("at the service level");
         const data = await UserRepository.findByID(itemId);
         console.log("the data : " + JSON.stringify(data));
         if (data) {
