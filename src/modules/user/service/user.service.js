@@ -41,7 +41,7 @@ class UserService {
             "group_name": data.user_name + "'s Main group",
             "members": [{
                 "email": data.email,
-                "user_name": data.user_name,
+                "name": data.user_name,
                 "role": "Lead"
             }]
         });
