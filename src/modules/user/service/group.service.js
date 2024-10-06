@@ -2,7 +2,7 @@ const ItemRepository = require(`../repository/item.repository`);
 const GroupRepository = require(`../repository/group.repository`);
 const userRepo = require('../repository/user.repository');
 
-const {utilConstants} = require('../../../helpers/constants');
+const { utilConstants } = require('../../../helpers/constants');
 const groupRepo = new GroupRepository();
 
 class GroupService {
@@ -72,7 +72,11 @@ class GroupService {
             members = [];
         }
 
-        group_data[0]['members'].push(members);
+        if (!group_data[0]['members']) {
+            group_data[0]['members'] = [];
+        } else {
+            group_data[0]['members'].push(members);
+        }
 
         console.log("the final group data: " + JSON.stringify(group_data));
 
