@@ -10,6 +10,7 @@ class UserRepository {
         console.log("The itemId : " + itemId + " and the table: " + this.tableName);
 
         var db = await getDb();
+        console.log("the db: " + JSON.stringify(db));
         var params = {
             TableName: "users",
             KeyConditionExpression: "user_id = :id",
