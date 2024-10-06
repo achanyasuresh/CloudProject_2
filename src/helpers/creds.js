@@ -11,19 +11,20 @@ const client = new SecretsManagerClient({
 });
 
 var creds = null;
+var jwtCreds = null;
 
 const getJwtCreds = async function() {
 
-    if (creds == null) {
+    if (jwtCreds == null) {
         // creds = {
         //     "JWT_SECRET_KEY":"7ee7dad0-593d-42f9-8003-b637d1d03873"
         // }
         await jwtInitialSetup();
     } 
 
-    console.log("the jwt creds: " + JSON.stringify(creds));
+    console.log("the jwt creds: " + JSON.stringify(jwtCreds));
 
-    return creds.JWT_SECRET_KEY;
+    return jwtCreds.JWT_SECRET_KEY;
 }
 
 const getAwsCreds = async function() {
@@ -45,7 +46,7 @@ const jwtInitialSetup = async function () {
 
         console.log("done with secrets manager: " + secretValue);
 
-        creds = JSON.parse(secretValue.SecretString);
+        jwtCreds = JSON.parse(secretValue.SecretString);
 
     } catch (error) {
         console.log("The secret manager data couldn't be accessed! ERROR: " + error);
