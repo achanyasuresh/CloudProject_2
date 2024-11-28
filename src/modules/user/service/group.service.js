@@ -1,13 +1,15 @@
 const ItemRepository = require(`../repository/item.repository`);
 const GroupRepository = require(`../repository/group.repository`);
-const userRepo = require('../repository/user.repository');
+const UserRepository = require('../repository/user.repository');
 
+const { utilConstants } = require('../../../helpers/constants');
 const groupRepo = new GroupRepository();
+const userRepo = new UserRepository();
 
 class GroupService {
-    
+
     async create(data) {
-        
+
         if (!data.members) {
             data.members = [];
         }
@@ -58,6 +60,51 @@ class GroupService {
 
     async update(groupId, data) {
         return await groupRepo.update(groupId, data)
+    }
+
+    async updateMembers(groupId, members) {
+        console.log("in service");
+        var group_data = await groupRepo.findByID(groupId)
+            .then((items) => {
+                return items.Items;
+            });
+
+        if (!members) {
+            members = [];
+        }
+
+        if (!group_data[0]['members']) {
+            group_data[0]['members'] = [];
+        } else {
+            group_data[0]['members'].push(members);
+        }
+
+        console.log("the final group data: " + JSON.stringify(group_data));
+
+        return await groupRepo.update(groupId, group_data[0]);
+    }
+
+    async uploadFileSubmission(group_id, file_name, file_stream, file_type) {
+        var file_data = await groupRepo.uploadToS3(group_id, file_name, file_stream, file_type);
+        var file = {
+            "file_name": file_name,
+            "file_path": utilConstants.CLOUDFRONT_DOMAIN + group_id + "/" + file_name
+        };
+
+        var group_data = await groupRepo.findByID(group_id)
+            .then(items => items.Items[0]);
+
+        if (!group_data['group_files']) {
+            group_data['group_files'] = [file];
+        } else {
+            group_data['group_files'].push(file);
+        }
+
+        console.log("The updated group data: " + JSON.stringify(group_data));
+
+        await groupRepo.update(group_id, group_data);
+
+        return file;
     }
 
     async deleteByID(UserID) {

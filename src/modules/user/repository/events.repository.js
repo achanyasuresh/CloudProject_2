@@ -56,7 +56,26 @@ class EventsRepository {
                 console.log(err);
                 
             } else {
-                console.log("yayy: " + JSON.stringify(data));
+                console.log("event: " + JSON.stringify(data));
+            }
+         }).promise();
+    }
+
+    async findAll() {
+
+        var db = await getDb();
+        var params = {
+            TableName: this.tableName
+        };
+        
+        return db.scan(params, function (err, data) {
+            if (err) {
+                console.log(err);
+                
+            } else {
+                if (typeof data.LastEvaluatedKey != "undefined") {
+                    console.log("there are more entries in the db");
+                }
             }
          }).promise();
     }

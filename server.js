@@ -1,6 +1,7 @@
 const express = require('express');
 const { getDb, initialSetup } = require('./src/helpers/database');
 const cors = require('cors');
+const fileUpload = require('express-fileupload');
 const {utilConstants} = require('./src/helpers/constants');
 const app = express();
 const port = 8080;
@@ -17,6 +18,10 @@ var db = null;
 const createServer = async () => {
     app.use(bodyParser.json());
     app.use(cors(corsOptions));
+    app.use(fileUpload({
+        useTempFiles: false,
+        tempFileDir: '/tmp'
+    }));
 
     // routes
     require(`./src/routes/api`)(app);

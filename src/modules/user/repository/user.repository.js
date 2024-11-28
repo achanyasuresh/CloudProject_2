@@ -3,16 +3,20 @@ const { v4: uuidv4 } = require('uuid');
 
 class UserRepository {
     constructor(tableName) {
-        this.tableName = tableName;
+        this.tableName = "users";
     }
 
     async findByID(itemId) {
         console.log("The itemId : " + itemId + " and the table: " + this.tableName);
 
         var db = await getDb();
+        console.log("the db: " + JSON.stringify(db));
         var params = {
             TableName: "users",
-            KeyConditionExpression: "user_id = :id",
+            KeyConditionExpression: "#user_id = :id",
+            ExpressionAttributeNames: {
+                "#user_id": "user_id"
+            },
             ExpressionAttributeValues: {
                 ":id": itemId
             }
@@ -25,7 +29,7 @@ class UserRepository {
                 console.log(err);
 
             } else {
-                console.log("yayy: " + JSON.stringify(data));
+                console.log("user: " + JSON.stringify(data));
             }
         }).promise();
     }
@@ -54,7 +58,7 @@ class UserRepository {
                 console.log(err);
 
             } else {
-                console.log("yayy: " + JSON.stringify(data));
+                console.log("user2: " + JSON.stringify(data));
             }
         }).promise();
     }
@@ -134,4 +138,4 @@ class UserRepository {
     }
 }
 
-module.exports = new UserRepository();
+module.exports = UserRepository;

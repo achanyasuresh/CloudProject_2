@@ -33,6 +33,23 @@ class GroupController {
         res.json(data)
     }
 
+    async updateMembers(req, res) {
+        const data = await groupService.updateMembers(req.query.groupId, req.body.members)
+
+        res.json(data)
+    }
+
+    async uploadFileSubmission(req, res) {
+
+        // console.log("the file was captured: " + req.files.submission);
+        console.log("the file was captured: " + req.files.submission.name);
+        console.log("the file was captured: " + req.files.submission.mimetype);
+
+        const data = await groupService.uploadFileSubmission(req.query.groupId, req.files.submission.name, req.files.submission.data, req.files.submission.mimetype);
+        
+        res.json(data);
+    }
+
 }
 
 module.exports = GroupController;

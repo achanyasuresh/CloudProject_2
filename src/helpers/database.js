@@ -1,4 +1,6 @@
 var AWS = require('aws-sdk');
+const { S3Client } = require("@aws-sdk/client-s3");
+const { getAwsCreds } = require('./creds');
 
 const {
     SecretsManagerClient,
@@ -11,9 +13,8 @@ const client = new SecretsManagerClient({
     region: "us-east-1",
 });
 
-let secretKey;
-
 let db = null;
+let s3 = null;
 
 const getDb = async function () {
 
@@ -25,7 +26,6 @@ const getDb = async function () {
     }
     return db;
 }
-
 const initialSetup = async function () {
     console.log("setting up db creds");
 
@@ -62,7 +62,48 @@ const initialSetup = async function () {
 
 }
 
+
+const getS3 = async function () {
+
+    if (s3 == null) {
+        console.log("initialising S3");
+        await initialSetupS3();
+    } else {
+        console.log("S3 already initialised");
+    }
+    return s3;
+}
+
+const initialSetupS3 = async function () {
+    console.log("setting up db creds");
+
+    try {
+        // prod stuff
+        const creds = await getAwsCreds();
+
+        // const creds = {
+        // }
+
+        AWS.config.update({
+            accessKeyId: creds.db_access_key_id,
+            secretAccessKey: creds.db_secret_access_key,
+            region: "us-east-1"
+        });
+
+        s3 = new S3Client({
+            accessKeyId: creds.db_access_key_id,
+            secretAccessKey: creds.db_secret_access_key,
+            region: "us-east-1"
+        });
+
+    } catch (error) {
+        console.log("The s3 credentials couldn't be accessed! ERROR: " + error);
+    }
+
+}
+
 module.exports = {
     getDb,
-    initialSetup
+    initialSetup,
+    getS3
 };

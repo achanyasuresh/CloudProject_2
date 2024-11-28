@@ -32,7 +32,7 @@ class ItemRepository {
                 console.log(err);
                 
             } else {
-                console.log("yayy: " + JSON.stringify(data));
+                console.log("item: " + JSON.stringify(data));
             }
          }).promise();
     }
@@ -63,12 +63,12 @@ class ItemRepository {
                 console.log(err);
                 
             } else {
-                console.log("yayy: " + JSON.stringify(data));
+                console.log("item1: " + JSON.stringify(data));
             }
          }).promise();
     }
 
-    async create_old(data) {
+    async create(data) {
 
         var db = await getDb();
         console.log("the data: " + JSON.stringify(data) + " and the table: " + this.tableName);
@@ -174,6 +174,7 @@ class ItemRepository {
 
         return await db.delete(params).promise();
     }
+    
 }
 
 module.exports = ItemRepository;
